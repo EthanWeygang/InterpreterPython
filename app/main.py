@@ -11,6 +11,8 @@ class Token:
         return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else "null"}"
 
 def ParseContents(text):
+    error_code = 0
+    line = 1
 
     for c in text:
         match c:
@@ -24,7 +26,13 @@ def ParseContents(text):
             case '+': print(Token("PLUS", c)); continue
             case ';': print(Token("SEMICOLON", c)); continue
             case '*': print(Token("STAR", c)); continue
-
+            case _: 
+                print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
+                error_code = 65
+        
+        line += 1
+    print("EOF  null")
+    return error_code
 
 def main():
     if len(sys.argv) < 3:
@@ -50,8 +58,8 @@ def main():
 
 
     if file_contents:
-        ParseContents(file_contents)
-        print("EOF  null")
+        exit(ParseContents(file_contents))
+        
     else:
         print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
