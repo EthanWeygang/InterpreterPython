@@ -48,12 +48,12 @@ class Scanner:
                 case "\n": line += 1; break
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
-                    error_code = 65; break
+                    self.error_code = 65; break
             
 
         self.PrintTokens()
         print("EOF  null")
-        return error_code
+        return self.error_code
         
 
     def Advance(self):
