@@ -23,7 +23,7 @@ class Scanner:
         self.error_code = 0
     
     def atEnd(self):
-        return self.current >= len(self.source)
+        return self.current >= len(self.source) - 1
 
     def ScanTokens(self):
         while not self.atEnd():
