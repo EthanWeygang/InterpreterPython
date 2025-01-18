@@ -12,7 +12,7 @@ class Token:
 
 def ParseContents(text):
     error_code = 0
-    line = 1
+    line = 0
 
     for c in text:
         match c:
