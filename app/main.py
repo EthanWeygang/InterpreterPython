@@ -2,7 +2,7 @@ import sys
 
 class Token:
 
-    def __init__(self, token_type, lexeme, literal):
+    def __init__(self, token_type, lexeme, literal=None):
         self.token_type = token_type
         self.lexeme = lexeme
         self.literal = literal
