@@ -50,7 +50,7 @@ def main():
 
 
     if file_contents:
-        raise NotImplementedError("Scanner not implemented")
+        ParseContents(file_contents)
     else:
         print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
