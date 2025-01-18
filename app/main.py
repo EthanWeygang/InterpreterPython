@@ -10,23 +10,24 @@ class Token:
     def __str__(self):
         return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else "null"}"
 
-start = 0
-current = 0
-line = 1
-error_code = 0
+
 
 class Scanner:
 
     def __init__(self, source):
         self.source = source
         self.tokens = []
+        self.start = 0
+        self.current = 0
+        self.line = 1
+        self.error_code = 0
     
     def atEnd(self):
-        return current >= len(self.source)
+        return self.current >= len(self.source)
 
     def ScanTokens(self):
         while not self.atEnd():
-            start = current
+            start = self.current
             c = self.Advance()
 
             match c:
@@ -46,7 +47,7 @@ class Scanner:
                 case '>': self.AddToken("GREATER_EQUAL" if self.Match("=") else "GREATER")
                 case "\n": line += 1; break
                 case _: 
-                    print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
+                    print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     error_code = 65; break
             
 
@@ -56,11 +57,11 @@ class Scanner:
         
 
     def Advance(self):
-        current += 1
-        return self.source[current]
+        self.current += 1
+        return self.source[self.current]
     
     def AddToken(self, type, literal):
-        self.tokens.append(Token(type, self.source[start:current + 1], literal))
+        self.tokens.append(Token(type, self.source[self.start:self.current + 1], literal))
     
     def PrintTokens(self):
         for t in self.tokens:
@@ -69,7 +70,7 @@ class Scanner:
     def Match(self, expected):
         if self.atEnd:
             return False
-        if self.source[current + 1] != expected: return False
+        if self.source[self.current + 1] != expected: return False
         
         current += 1
         return True
