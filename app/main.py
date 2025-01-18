@@ -51,6 +51,7 @@ def main():
 
     if file_contents:
         ParseContents(file_contents)
+        print("EOF  null")
     else:
         print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
