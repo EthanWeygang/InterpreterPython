@@ -24,7 +24,7 @@ class Scanner:
     def atEnd(self):
         return current >= len(self.source)
 
-    def ScanTokens(self, source):
+    def ScanTokens(self):
         while not self.atEnd():
             start = current
             c = self.Advance()
@@ -57,7 +57,7 @@ class Scanner:
 
     def Advance(self):
         current += 1
-        return current
+        return self.source[current]
     
     def AddToken(self, type, literal):
         self.tokens.append(Token(type, self.source[start:current + 1], literal))
