@@ -26,12 +26,13 @@ def ParseContents(text):
             case '+': print(Token("PLUS", c)); continue
             case ';': print(Token("SEMICOLON", c)); continue
             case '*': print(Token("STAR", c)); continue
+            case "\n": line += 1
             case _: 
                 print(f"[line {line}] Error: Unexpected character: {c}", file=sys.stderr)
                 error_code = 65
         
-        line += 1
         
+
     print("EOF  null")
     return error_code
 
