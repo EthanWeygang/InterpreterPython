@@ -8,7 +8,7 @@ class Token:
         self.literal = literal
     
     def __str__(self):
-        return f"{self.token_tyupe} {self.lexeme} {self.literal if self.literal != None else "null"}"
+        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else "null"}"
 
 def ParseContents(text):
 
