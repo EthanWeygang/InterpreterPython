@@ -1,5 +1,30 @@
 import sys
 
+class Token:
+
+    def __init__(self, token_type, lexeme, literal):
+        self.token_type = token_type
+        self.lexeme = lexeme
+        self.literal = literal
+    
+    def __str__(self):
+        return f"{self.token_tyupe} {self.lexeme} {self.literal if self.literal != None else "null"}"
+
+def ParseContents(text):
+
+    for c in text:
+        match c:
+            case '(': print(Token("LEFT_PAREN", c)); continue
+            case ')': print(Token("RIGHT_PAREN", c)); continue
+            case '{': print(Token("LEFT_BRACE", c)); continue
+            case '}': print(Token("RIGHT_BRACE", c)); continue
+            case ',': print(Token("COMMA", c)); continue
+            case '.': print(Token("DOT", c)); continue
+            case '-': print(Token("MINUS", c)); continue
+            case '+': print(Token("PLUS", c)); continue
+            case ';': print(Token("SEMICOLON", c)); continue
+            case '*': print(Token("STAR", c)); continue
+
 
 def main():
     if len(sys.argv) < 3:
@@ -9,6 +34,8 @@ def main():
     command = sys.argv[1]
     filename = sys.argv[2]
 
+
+
     if command != "tokenize":
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
@@ -16,13 +43,18 @@ def main():
     with open(filename) as file:
         file_contents = file.read()
 
-    # You can use print statements as follows for debugging, they'll be visible when running tests.
+
+
     print("Logs from your program will appear here!", file=sys.stderr)
+
+
 
     if file_contents:
         raise NotImplementedError("Scanner not implemented")
     else:
         print("EOF  null") # Placeholder, remove this line when implementing the scanner
+
+
 
 
 if __name__ == "__main__":
