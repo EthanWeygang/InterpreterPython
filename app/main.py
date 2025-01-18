@@ -12,7 +12,7 @@ class Token:
 
 def ParseContents(text):
     error_code = 0
-    line = 0
+    line = 1
 
     for c in text:
         match c:
@@ -31,6 +31,7 @@ def ParseContents(text):
                 error_code = 65
         
         line += 1
+        
     print("EOF  null")
     return error_code
 
