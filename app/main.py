@@ -41,10 +41,10 @@ class Scanner:
                 case '+': self.AddToken("PLUS", c); break
                 case ';': self.AddToken("SEMICOLON", c); break
                 case '*': self.AddToken("STAR", c); break
-                case '!': self.AddToken("BANG_EQUAL" if self.Match("=") else "BANG")
-                case '=': self.AddToken("EQUAL_EQUAL" if self.Match("=") else "EQUAL")
-                case '<': self.AddToken("LESS_EQUAL" if self.Match("=") else "LESS")
-                case '>': self.AddToken("GREATER_EQUAL" if self.Match("=") else "GREATER")
+                case '!': self.AddToken("BANG_EQUAL" if self.Match("=") else "BANG", c)
+                case '=': self.AddToken("EQUAL_EQUAL" if self.Match("=") else "EQUAL", c)
+                case '<': self.AddToken("LESS_EQUAL" if self.Match("=") else "LESS", c)
+                case '>': self.AddToken("GREATER_EQUAL" if self.Match("=") else "GREATER", c)
                 case "\n": line += 1; break
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
