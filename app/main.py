@@ -31,16 +31,16 @@ class Scanner:
             c = self.Advance()
 
             match c:
-                case '(': self.AddToken("LEFT_PAREN", c); break
-                case ')': self.AddToken("RIGHT_PAREN", c); break
-                case '{': self.AddToken("LEFT_BRACE", c); break
-                case '}': self.AddToken("RIGHT_BRACE", c); break
-                case ',': self.AddToken("COMMA", c); break
-                case '.': self.AddToken("DOT", c); break
-                case '-': self.AddToken("MINUS", c); break
-                case '+': self.AddToken("PLUS", c); break
-                case ';': self.AddToken("SEMICOLON", c); break
-                case '*': self.AddToken("STAR", c); break
+                case '(': self.AddToken("LEFT_PAREN", None); break
+                case ')': self.AddToken("RIGHT_PAREN", None); break
+                case '{': self.AddToken("LEFT_BRACE", None); break
+                case '}': self.AddToken("RIGHT_BRACE", None); break
+                case ',': self.AddToken("COMMA", None); break
+                case '.': self.AddToken("DOT", None); break
+                case '-': self.AddToken("MINUS", None); break
+                case '+': self.AddToken("PLUS", None); break
+                case ';': self.AddToken("SEMICOLON", None); break
+                case '*': self.AddToken("STAR", None); break
                 case '!': self.AddToken("BANG_EQUAL" if self.Match("=") else "BANG", None)
                 case '=': self.AddToken("EQUAL_EQUAL" if self.Match("=") else "EQUAL", None)
                 case '<': self.AddToken("LESS_EQUAL" if self.Match("=") else "LESS", None)
