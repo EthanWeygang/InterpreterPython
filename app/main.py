@@ -23,11 +23,11 @@ class Scanner:
         self.error_code = 0
     
     def atEnd(self):
-        return self.current <= len(self.source)
+        return self.current >= len(self.source)
 
     def ScanTokens(self):
         while not self.atEnd():
-            start = self.current
+            self.start = self.current
             c = self.Advance()
 
             match c:
@@ -57,23 +57,30 @@ class Scanner:
         
 
     def Advance(self):
+        if self.atEnd():
+            return '\0'  # Return null character at the end
+        char = self.source[self.current]
         self.current += 1
-        return self.source[self.current]
+        return char
+
     
-    def AddToken(self, type, literal):
-        self.tokens.append(Token(type, self.source[self.start:self.current + 1], literal))
+    def AddToken(self, token_type, literal):
+        self.tokens.append(Token(token_type, self.source[self.start:self.current], literal))
+
     
     def PrintTokens(self):
         for t in self.tokens:
             print(t)
     
     def Match(self, expected):
-        if self.atEnd:
+        if self.atEnd():
             return False
-        if self.source[self.current + 1] != expected: return False
-        
-        current += 1
+        if self.source[self.current] != expected:
+            return False
+
+        self.current += 1
         return True
+
 
 
 
