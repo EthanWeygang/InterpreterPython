@@ -23,6 +23,7 @@ class Scanner:
         self.error_code = 0
     
     def atEnd(self):
+        print(f"{self.current}, {len(self.source)}",file=sys.stderr)
         return self.current >= len(self.source)
 
     def ScanTokens(self):
@@ -55,7 +56,7 @@ class Scanner:
         print("EOF  null")
         return self.error_code
         
-        
+
 
     def Advance(self):
         if self.atEnd():
@@ -68,7 +69,7 @@ class Scanner:
     def AddToken(self, token_type, literal):
         self.tokens.append(Token(token_type, self.source[self.start:self.current], literal))
 
-    
+    {}
     def PrintTokens(self):
         for t in self.tokens:
             print(t)
