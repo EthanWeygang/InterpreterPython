@@ -23,8 +23,6 @@ class Scanner:
         self.error_code = 0
     
     def atEnd(self):
-        print(f"{self.current}, {len(self.source)}",file=sys.stderr)
-        print(f"{self.current >= len(self.source)}",file=sys.stderr)
         return self.current >= len(self.source)
 
     def ScanTokens(self):
