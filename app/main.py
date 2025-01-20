@@ -55,6 +55,7 @@ class Scanner:
         print("EOF  null")
         return self.error_code
         
+        
 
     def Advance(self):
         if self.atEnd():
