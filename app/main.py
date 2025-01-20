@@ -33,21 +33,21 @@ class Scanner:
             c = self.Advance()
 
             match c:
-                case '(': self.AddToken("LEFT_PAREN", None); break
-                case ')': self.AddToken("RIGHT_PAREN", None); break
-                case '{': self.AddToken("LEFT_BRACE", None); break
-                case '}': self.AddToken("RIGHT_BRACE", None); break
-                case ',': self.AddToken("COMMA", None); break
-                case '.': self.AddToken("DOT", None); break
-                case '-': self.AddToken("MINUS", None); break
-                case '+': self.AddToken("PLUS", None); break
-                case ';': self.AddToken("SEMICOLON", None); break
-                case '*': self.AddToken("STAR", None); break
+                case '(': self.AddToken("LEFT_PAREN", None)
+                case ')': self.AddToken("RIGHT_PAREN", None)
+                case '{': self.AddToken("LEFT_BRACE", None)
+                case '}': self.AddToken("RIGHT_BRACE", None)
+                case ',': self.AddToken("COMMA", None)
+                case '.': self.AddToken("DOT", None)
+                case '-': self.AddToken("MINUS", None)
+                case '+': self.AddToken("PLUS", None)
+                case ';': self.AddToken("SEMICOLON", None)
+                case '*': self.AddToken("STAR", None)
                 case '!': self.AddToken("BANG_EQUAL" if self.Match("=") else "BANG", None)
                 case '=': self.AddToken("EQUAL_EQUAL" if self.Match("=") else "EQUAL", None)
                 case '<': self.AddToken("LESS_EQUAL" if self.Match("=") else "LESS", None)
                 case '>': self.AddToken("GREATER_EQUAL" if self.Match("=") else "GREATER", None)
-                case "\n": line += 1; break
+                case "\n": line += 1
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65; break
@@ -70,7 +70,6 @@ class Scanner:
     def AddToken(self, token_type, literal):
         self.tokens.append(Token(token_type, self.source[self.start:self.current], literal))
 
-    {}
     def PrintTokens(self):
         for t in self.tokens:
             print(t)
@@ -120,7 +119,7 @@ def main():
         exit(Scannerx.ScanTokens())
         
     else:
-        print("EOF  null") # Placeholder, remove this line when implementing the scanner
+        print("EOF  null2") # Placeholder, remove this line when implementing the scanner
 
 
 
