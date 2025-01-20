@@ -30,6 +30,8 @@ class Scanner:
             self.start = self.current
             c = self.Advance()
 
+            print(c, file=sys.stderr)
+
             match c:
                 case '(': self.AddToken("LEFT_PAREN", None)
                 case ')': self.AddToken("RIGHT_PAREN", None)
