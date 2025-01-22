@@ -73,7 +73,7 @@ class Scanner:
             self.Advance()
         
         if self.atEnd():
-            print(f"{self.line} Unterminated string",file=sys.stderr)
+            print(f"[line {self.line}] Error: Unterminated string.",file=sys.stderr)
             self.error_code = 65
             return
 
