@@ -78,6 +78,7 @@ class Scanner:
                 case _: 
                     if self.IsDigit(c):
                         self.Number()
+                        print(c,file=sys.stderr)
                         continue
                     elif self.IsAlpha(c):
                         self.Identifier()
