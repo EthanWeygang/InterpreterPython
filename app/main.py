@@ -96,7 +96,7 @@ class Scanner:
             while self.IsDigit(self.Peek()):
                 self.Advance()
             
-            self.AddToken("NUMBER", float(self.source[self.start: self.current + 1]))
+            self.AddToken("NUMBER", float(self.source[self.start: self.current]))
 
     def IsDigit(self, c):
         return  c is not None and c in "0123456789"
