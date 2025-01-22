@@ -58,6 +58,9 @@ class Scanner:
                 case '\t': continue
                 case "\n": self.line += 1
                 case _: 
+                    if self.IsDigit():
+                        Number()
+
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
             
@@ -82,10 +85,24 @@ class Scanner:
         value = self.source[self.start+1:self.current - 1]
         self.AddToken("STRING", value)
 
+    def Number(self):
+        while self.IsDigit(self.Peek()):
+            self.Advance()
+
+            if self.Peek() == "." and self.IsDigit(self.PeekNext()):
+                self.Advance()
+            
+            while self.IsDigit(self.Peek()):
+                self.Advance()
+            
+            self.AddToken("NUMBER", float(self.source[self.start: self.current + 1]))
+
+    def IsDigit(self, c):
+        return c in "0123456789"
 
     def Advance(self):
         if self.atEnd():
-            return '\0'  # Return null character at the end
+            return '\0'
         char = self.source[self.current]
         self.current += 1
         return char
@@ -94,6 +111,10 @@ class Scanner:
     def Peek(self):
         if self.atEnd(): return None
         return self.source[self.current]
+    
+    def PeekNext(self):
+        if self.current + 1 >= len(self.source): return None
+        return self.source[self.current + 1]
 
     
     def AddToken(self, token_type, literal):
