@@ -128,6 +128,7 @@ class Scanner:
             while self.IsDigit(self.Peek()):
                 self.Advance()
             
+            print(self.source[self.start: self.current],file=sys.stderr)
             self.AddToken("NUMBER", float(self.source[self.start: self.current]))
 
     def IsDigit(self, c):
