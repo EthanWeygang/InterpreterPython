@@ -125,15 +125,10 @@ class Scanner:
             if self.Peek() == "." and self.IsDigit(self.PeekNext()):
                 self.Advance()
             
-            while self.IsDigit(self.Peek()):
-                self.Advance()
-
-         # Keep the original lexeme as a string
-        lexeme = self.source[self.start:self.current]
-        
-        # Convert it to a float for the literal value
-        literal = float(lexeme)
-        self.AddToken("NUMBER", literal)
+                while self.IsDigit(self.Peek()):
+                    self.Advance()
+                
+        self.AddToken("NUMBER", float(self.source[self.start: self.current]))
 
     def IsDigit(self, c):
         return  c is not None and c.isdigit()
