@@ -60,6 +60,7 @@ class Scanner:
                 case _: 
                     if self.IsDigit(c):
                         self.Number()
+                        continue
 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
