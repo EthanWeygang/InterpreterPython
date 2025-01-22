@@ -59,7 +59,7 @@ class Scanner:
                 case "\n": self.line += 1
                 case _: 
                     if self.IsDigit():
-                        Number()
+                        self.Number(c)
 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
