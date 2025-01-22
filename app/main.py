@@ -48,7 +48,7 @@ class Scanner:
                 case "\n": self.line += 1
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
-                    self.error_code = 65; break
+                    self.error_code = 65
             
 
         self.PrintTokens()
