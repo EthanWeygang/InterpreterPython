@@ -117,7 +117,7 @@ def main():
         exit(Scannerx.ScanTokens())
         
     else:
-        print("EOF  null2") # Placeholder, remove this line when implementing the scanner
+        print("EOF  null") # Placeholder, remove this line when implementing the scanner
 
 
 
