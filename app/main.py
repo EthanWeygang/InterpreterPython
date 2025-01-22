@@ -53,7 +53,9 @@ class Scanner:
                     while not self.atEnd() and self.Peek() != '\n':
                         self.Advance()
 
-                case [' ', '\r', '\t']: continue
+                case ' ': continue
+                case '\r': continue
+                case '\t': continue
                 case "\n": self.line += 1
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
