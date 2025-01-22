@@ -100,7 +100,7 @@ class Scanner:
         if text not in self.keywords.keys():
             self.AddToken("IDENTIFIER", None)
         else:
-            self.AddToken(self.keywords[text], self.keywords[text])
+            self.AddToken(self.keywords[text], None)
 
 
     def String(self):
