@@ -98,7 +98,7 @@ class Scanner:
             self.AddToken("NUMBER", float(self.source[self.start: self.current + 1]))
 
     def IsDigit(self, c):
-        return c in "0123456789"
+        return True if c in "0123456789" else False
 
     def Advance(self):
         if self.atEnd():
