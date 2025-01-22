@@ -79,8 +79,7 @@ class Scanner:
                     if self.IsDigit(c):
                         self.Number()
                         continue
-
-                    if self.IsAlpha(c):
+                    elif self.IsAlpha(c):
                         self.Identifier()
                         continue
 
@@ -100,7 +99,7 @@ class Scanner:
         if text not in self.keywords.keys():
             self.AddToken("IDENTIFIER", None)
         else:
-            self.AddToken(text.upper(), self.keywords[text])
+            self.AddToken(self.keywords[text], self.keywords[text])
 
 
     def String(self):
