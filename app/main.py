@@ -78,7 +78,7 @@ class Scanner:
 
         self.Advance()
 
-        value = self.source[self.start+1:self.current]
+        value = self.source[self.start+1:self.current - 1]
         self.AddToken("STRING", value)
 
 
