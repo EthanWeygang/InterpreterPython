@@ -52,7 +52,7 @@ class Scanner:
 
                     while not self.atEnd() and self.Peek() != '\n':
                         self.Advance()
-
+                case '"': self.String()
                 case ' ': continue
                 case '\r': continue
                 case '\t': continue
@@ -67,6 +67,19 @@ class Scanner:
         return self.error_code
         
 
+    def String(self):
+        while self.Peek != '"' and not self.atEnd():
+            if self.Peek() == "\n": self.line += 1
+            self.Advance()
+        
+        if self.atEnd():
+            print(f"{self.line} Unterminated string",file=sys.stderr)
+            return
+
+        self.Advance()
+
+        value = self.source[self.start+1:self.current]
+        self.AddToken("STRING", value)
 
     def Advance(self):
         if self.atEnd():
