@@ -21,6 +21,24 @@ class Scanner:
         self.current = 0
         self.line = 1
         self.error_code = 0
+        self.keywords = {
+                "and":   "AND",
+                "class": "CLASS",
+                "else":  "ELSE",
+                "false": "FALSE",
+                "for":   "FOR",
+                "fun":   "FUN",
+                "if":    "IF",
+                "nil":   "NIL",
+                "or":    "OR",
+                "print": "PRINT",
+                "return":"RETURN",
+                "super": "SUPER",
+                "this":  "THIS",
+                "true":  "TRUE",
+                "var":   "VAR",
+                "while": "WHILE"
+        }
     
     def atEnd(self):
         return self.current >= len(self.source)
@@ -62,6 +80,10 @@ class Scanner:
                         self.Number()
                         continue
 
+                    if self.IsAlpha(c):
+                        self.Identifier()
+                        continue
+
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
             
@@ -70,6 +92,16 @@ class Scanner:
         print("EOF  null")
         return self.error_code
         
+    def Identifier(self):
+        while self.IsAlphaNumeric(self.Peek()):
+            self.Advance()
+
+        text = self.source[self.start:self.current]
+        if text not in self.keywords.keys():
+            self.AddToken("IDENTIFIER", None)
+        else:
+            self.AddToken(text.upper(), self.keywords[text])
+
 
     def String(self):
         while self.Peek() != '"' and not self.atEnd():
@@ -99,7 +131,13 @@ class Scanner:
             self.AddToken("NUMBER", float(self.source[self.start: self.current]))
 
     def IsDigit(self, c):
-        return  c is not None and c in "0123456789"
+        return  c is not None and c.isdigit()
+    
+    def IsAlpha(self, c):
+        return c  is not None and c.isalpha()
+
+    def IsAlphaNumeric(self, c):
+        return self.IsDigit(c) or self.IsAlpha(c)
 
     def Advance(self):
         if self.atEnd():
