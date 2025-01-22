@@ -68,7 +68,7 @@ class Scanner:
         
 
     def String(self):
-        while self.Peek != '"' and not self.atEnd():
+        while self.Peek() != '"' and not self.atEnd():
             if self.Peek() == "\n": self.line += 1
             self.Advance()
         
@@ -81,12 +81,14 @@ class Scanner:
         value = self.source[self.start+1:self.current]
         self.AddToken("STRING", value)
 
+
     def Advance(self):
         if self.atEnd():
             return '\0'  # Return null character at the end
         char = self.source[self.current]
         self.current += 1
         return char
+
 
     def Peek(self):
         if self.atEnd(): return None
@@ -96,10 +98,12 @@ class Scanner:
     def AddToken(self, token_type, literal):
         self.tokens.append(Token(token_type, self.source[self.start:self.current], literal))
 
+
     def PrintTokens(self):
         for t in self.tokens:
             print(t)
     
+
     def Match(self, expected):
         if self.atEnd():
             return False
