@@ -50,7 +50,7 @@ class Scanner:
                         self.AddToken('SLASH', None)
                         continue
 
-                    while self.Peek() != '\n':
+                    while not self.atEnd() and self.Peek() != '\n':
                             self.Advance()
 
                 case [' ', '\r', '\t']: continue
