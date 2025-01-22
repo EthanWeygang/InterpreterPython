@@ -134,7 +134,7 @@ class Scanner:
         return  c is not None and c.isdigit()
     
     def IsAlpha(self, c):
-        return c  is not None and c.isalpha()
+        return c  is not None and (c.isalpha() or c in "_")
 
     def IsAlphaNumeric(self, c):
         return self.IsDigit(c) or self.IsAlpha(c)
