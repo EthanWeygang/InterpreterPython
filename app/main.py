@@ -45,6 +45,15 @@ class Scanner:
                 case '=': self.AddToken("EQUAL_EQUAL" if self.Match("=") else "EQUAL", None)
                 case '<': self.AddToken("LESS_EQUAL" if self.Match("=") else "LESS", None)
                 case '>': self.AddToken("GREATER_EQUAL" if self.Match("=") else "GREATER", None)
+                case '/': 
+                    if not self.Match("/"):
+                        self.AddToken('SLASH', None)
+                        continue
+
+                    while self.Peek() != '\n':
+                            self.Advance
+
+                case [' ', '\r', '\t']: continue
                 case "\n": self.line += 1
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
@@ -63,6 +72,10 @@ class Scanner:
         char = self.source[self.current]
         self.current += 1
         return char
+
+    def Peek(self):
+        if self.atEnd(): return None
+        return self.source[self.current]
 
     
     def AddToken(self, token_type, literal):
