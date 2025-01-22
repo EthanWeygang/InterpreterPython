@@ -8,7 +8,7 @@ class Token:
         self.literal = literal
     
     def __str__(self):
-        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else "null"}"
+        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else 'null'}"
 
 
 
@@ -45,7 +45,7 @@ class Scanner:
                 case '=': self.AddToken("EQUAL_EQUAL" if self.Match("=") else "EQUAL", None)
                 case '<': self.AddToken("LESS_EQUAL" if self.Match("=") else "LESS", None)
                 case '>': self.AddToken("GREATER_EQUAL" if self.Match("=") else "GREATER", None)
-                case "\n": self.line = self.line + 1
+                case "\n": self.line += 1
                 case _: 
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65; break
