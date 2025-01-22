@@ -51,7 +51,7 @@ class Scanner:
                         continue
 
                     while self.Peek() != '\n':
-                            self.Advance
+                            self.Advance()
 
                 case [' ', '\r', '\t']: continue
                 case "\n": self.line += 1
