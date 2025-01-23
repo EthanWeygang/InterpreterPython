@@ -276,7 +276,7 @@ class Parser():
     def Match(self, expected):
         if self.atEnd():
             return False
-        if self.tokens[self.current] != expected:
+        if self.tokens[self.current].token_type != expected:
             return False
 
         self.current += 1
@@ -293,13 +293,15 @@ class Parser():
         return self.tokens[self.current]
 
     def Consume(self, type, message):
-        if self.Check(): return self.Advance()
+        if self.Check(type): 
+            return self.Advance()
 
-        raise self.Error(self.Peek(), message)
+        raise Exception(f"[line {self.Peek().line}] {message}")
 
     def Check(self, type):
-        if self.atEnd(): return False
-        return self.Peek().type == type
+        if self.atEnd(): 
+            return False
+        return self.Peek().token_type == type
 
     
 
@@ -339,7 +341,10 @@ def main():
                 print("EOF  null") # Placeholder, remove this line when implementing the scanner
                 return 0
 
+
             Scannerx = Scanner(file_contents)
+            Scannerx.ScanTokens()
+            
             Parserx = Parser(Scannerx.tokens)
             print(Parserx.Parse())
     else:
