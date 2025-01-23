@@ -178,20 +178,32 @@ class Expr:
         def __init__(self, value):
             self.value = value
 
+        def __str__(self):
+            return str(self.value)
+
     class Unary: 
         def __init__(self, operator, right):
             self.operator = operator
             self.right = right
+
+        def __str__(self):
+            return f"({self.operator.lexeme} {self.right})"
 
     class Binary:
         def __init__(self, left, operator, right):
             self.left = left
             self.operator = operator
             self.right = right
+
+        def __str__(self):
+            return f"({self.operator.lexeme} {self.left} {self.right})"
     
     class Grouping:
         def __init__(self, expression):
             self.expression = expression
+
+        def __str__(self):
+            return f"(group {self.expression})"
 
 
 class Parser():
@@ -346,7 +358,7 @@ def main():
             Scannerx.ScanTokens()
 
             Parserx = Parser(Scannerx.tokens)
-            print(Parserx.Parse().expression)
+            print(Parserx.Parse())
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
