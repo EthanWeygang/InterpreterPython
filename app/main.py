@@ -84,9 +84,8 @@ class Scanner:
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
             
-
+        self.AddToken("EOF", "EOF")
         self.PrintTokens()
-        print("EOF  null")
         return self.error_code
         
     def Identifier(self):
@@ -173,16 +172,13 @@ class Scanner:
         self.current += 1
         return True
 
+
 class Expr:
     class Literal:
         def __init__(self, value):
             self.value = value
 
-    class Grouping:
-        def __init__(self, expression):
-            self.expression = expression
-
-    class Unary:
+    class Unary: 
         def __init__(self, operator, right):
             self.operator = operator
             self.right = right
@@ -192,13 +188,21 @@ class Expr:
             self.left = left
             self.operator = operator
             self.right = right
+    
+    class Grouping:
+        def __init__(self, expression):
+            self.expression = expression
+
 
 class Parser():
 
     def __init__(self, tokens):
         self.current = 0
         self.tokens = tokens
-    
+
+    def Parse(self):
+        return self.Equality()
+
     def Expression(self):
         return self.Equality()
     
@@ -219,6 +223,20 @@ class Parser():
             expr = Expr.Binary(expr, operator, right)
 
         return expr
+    
+    def Term(self):
+        expr = self.Factor()
+        while self.Match("MINUS") or self.Match("PLUS"):
+            operator = self.previous()
+            right = self.Factor()
+            expr = Expr.Binary(expr, operator, right)
+    
+    def Factor(self):
+        expr = self.Unary()
+        while self.Match("SLASH") or self.Match("STAR"):
+            operator = self.previous
+            right = self.unary()
+            expr = Expr.Binary(expr, operator, right)
     
     def Unary(self):
         if self.Match("BANG") or self.Match("MINUS"):
@@ -242,11 +260,25 @@ class Parser():
             return Expr.Grouping(expr)
 
         raise self.Error(self.Peek(), "Expect expression")
+    
+    
+
+
+
+
+
+    def Advance(self):
+        if self.atEnd():
+            return '\0'
+        char = self.source[self.current]
+        self.current += 1
+        return char
+
 
     def Match(self, expected):
         if self.atEnd():
             return False
-        if self.source[self.current] != expected:
+        if self.tokens[self.current] != expected:
             return False
 
         self.current += 1
@@ -254,6 +286,11 @@ class Parser():
     
     def atEnd(self):
         return self.current >= len(self.tokens)
+    
+    def Previous(self):
+        return self.tokens[self.current - 1]
+    
+
 
 
 
@@ -269,26 +306,37 @@ def main():
 
 
 
-    if command != "tokenize":
+    if command == "tokenize":
+        
+        with open(filename) as file:
+            file_contents = file.read()
+
+            if not file_contents:
+                print("EOF  null") # Placeholder, remove this line when implementing the scanner
+                return 0
+
+            Scannerx = Scanner(file_contents)
+            exit(Scannerx.ScanTokens())
+                
+
+    elif command == "parse":
+        with open(filename) as file:
+            file_contents = file.read()
+
+            if not file_contents:
+                print("EOF  null") # Placeholder, remove this line when implementing the scanner
+                return 0
+
+            Scannerx = Scanner(file_contents)
+            Parserx = Parser(Scannerx.tokens)
+            print(Parserx.Parse())
+    else:
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
-
-    with open(filename) as file:
-        file_contents = file.read()
 
 
 
     print("Logs from your program will appear here!", file=sys.stderr)
-
-
-
-    if file_contents:
-        Scannerx = Scanner(file_contents)
-        exit(Scannerx.ScanTokens())
-        
-    else:
-        print("EOF  null") # Placeholder, remove this line when implementing the scanner
-
 
 
 
