@@ -84,8 +84,8 @@ class Scanner:
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
             
-        self.AddToken("EOF", "EOF")
         self.PrintTokens()
+        print("EOF")
         return self.error_code
         
     def Identifier(self):
@@ -227,15 +227,15 @@ class Parser():
     def Term(self):
         expr = self.Factor()
         while self.Match("MINUS") or self.Match("PLUS"):
-            operator = self.previous()
+            operator = self.Previous()
             right = self.Factor()
             expr = Expr.Binary(expr, operator, right)
     
     def Factor(self):
         expr = self.Unary()
         while self.Match("SLASH") or self.Match("STAR"):
-            operator = self.previous
-            right = self.unary()
+            operator = self.Previous
+            right = self.Unary()
             expr = Expr.Binary(expr, operator, right)
     
     def Unary(self):
@@ -260,17 +260,11 @@ class Parser():
             return Expr.Grouping(expr)
 
         raise self.Error(self.Peek(), "Expect expression")
-    
-    
-
-
-
-
 
     def Advance(self):
         if self.atEnd():
             return '\0'
-        char = self.source[self.current]
+        char = self.tokens[self.current]
         self.current += 1
         return char
 
@@ -289,6 +283,23 @@ class Parser():
     
     def Previous(self):
         return self.tokens[self.current - 1]
+    
+    def Peek(self):
+        if self.atEnd(): return None
+        return self.tokens[self.current]
+
+    def Consume(self, type, message):
+        if self.Check(): return self.Advance()
+
+        raise self.Error(self.Peek(), message)
+    
+    def Error(self, token, message):
+        print(token, message)
+
+    def Check(self, type):
+        if self.atEnd(): return False
+        return self.Peek().type == type
+
     
 
 
