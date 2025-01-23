@@ -259,8 +259,6 @@ class Parser():
             self.Consume("RIGHT_PAREN", "Expect ')' after expression.")
             return Expr.Grouping(expr)
 
-        raise self.Error(self.Peek(), "Expect expression")
-
     def Advance(self):
         if self.atEnd():
             return '\0'
@@ -292,9 +290,6 @@ class Parser():
         if self.Check(): return self.Advance()
 
         raise self.Error(self.Peek(), message)
-    
-    def Error(self, token, message):
-        print(token, message)
 
     def Check(self, type):
         if self.atEnd(): return False
