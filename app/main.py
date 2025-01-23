@@ -213,6 +213,8 @@ class Parser():
             operator = self.Previous()
             right = self.Comparison()
             expr = Expr.Binary(expr, operator, right)
+        
+        return expr
     
     def Comparison(self):
         expr = self.Term()
@@ -230,6 +232,8 @@ class Parser():
             operator = self.Previous()
             right = self.Factor()
             expr = Expr.Binary(expr, operator, right)
+        
+        return expr
     
     def Factor(self):
         expr = self.Unary()
@@ -237,6 +241,8 @@ class Parser():
             operator = self.Previous
             right = self.Unary()
             expr = Expr.Binary(expr, operator, right)
+        
+        return expr
     
     def Unary(self):
         if self.Match("BANG") or self.Match("MINUS"):
