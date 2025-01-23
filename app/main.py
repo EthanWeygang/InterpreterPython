@@ -11,7 +11,6 @@ class Token:
         return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else 'null'}"
 
 
-
 class Scanner:
 
     def __init__(self, source):
@@ -40,8 +39,7 @@ class Scanner:
                 "while": "WHILE"
         }
     
-    def atEnd(self):
-        return self.current >= len(self.source)
+    
 
     def ScanTokens(self):
         while not self.atEnd():
@@ -78,7 +76,6 @@ class Scanner:
                 case _: 
                     if self.IsDigit(c):
                         self.Number()
-                        print(c,file=sys.stderr)
                         continue
                     elif self.IsAlpha(c):
                         self.Identifier()
@@ -102,6 +99,8 @@ class Scanner:
         else:
             self.AddToken(self.keywords[text], None)
 
+    def atEnd(self):
+        return self.current >= len(self.source)
 
     def String(self):
         while self.Peek() != '"' and not self.atEnd():
@@ -174,9 +173,87 @@ class Scanner:
         self.current += 1
         return True
 
+class Expr:
+    class Literal:
+        def __init__(self, value):
+            self.value = value
 
+    class Grouping:
+        def __init__(self, expression):
+            self.expression = expression
 
+    class Unary:
+        def __init__(self, operator, right):
+            self.operator = operator
+            self.right = right
 
+    class Binary:
+        def __init__(self, left, operator, right):
+            self.left = left
+            self.operator = operator
+            self.right = right
+
+class Parser():
+
+    def __init__(self, tokens):
+        self.current = 0
+        self.tokens = tokens
+    
+    def Expression(self):
+        return self.Equality()
+    
+    def Equality(self):
+        expr = self.Comparison()
+
+        while self.Match("BANG_EQUAL") or self.Match("EQUAL_EQUAL"):
+            operator = self.Previous()
+            right = self.Comparison()
+            expr = Expr.Binary(expr, operator, right)
+    
+    def Comparison(self):
+        expr = self.Term()
+
+        while self.Match("GREATER") or self.Match("GREATER_EQUAL") or self.Match("LESS") or self.Match("LESS_EQUAL"):
+            operator = self.Previous()
+            right = self.Term()
+            expr = Expr.Binary(expr, operator, right)
+
+        return expr
+    
+    def Unary(self):
+        if self.Match("BANG") or self.Match("MINUS"):
+            operator = self.Previous()
+            right = self.Unary()
+            return Expr.Unary(operator, right)
+        
+        return self.Primary()
+    
+    def Primary(self):
+        if self.Match("FALSE"): return Expr.Literal(False)
+        if self.Match("TRUE"): return Expr.Literal(True)
+        if self.Match("NIL"): return Expr.Literal(None)
+
+        if self.Match("NUMBER") or self.Match("STRING"):
+            return Expr.Literal(self.Previous().literal)
+        
+        if self.Match("LEFT_PAREN"):
+            expr = self.Expression()
+            self.Consume("RIGHT_PAREN", "Expect ')' after expression.")
+            return Expr.Grouping(expr)
+
+        raise self.Error(self.Peek(), "Expect expression")
+
+    def Match(self, expected):
+        if self.atEnd():
+            return False
+        if self.source[self.current] != expected:
+            return False
+
+        self.current += 1
+        return True
+    
+    def atEnd(self):
+        return self.current >= len(self.tokens)
 
 
 
