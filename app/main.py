@@ -179,7 +179,7 @@ class Expr:
             self.value = value
 
         def __str__(self):
-            return str(self.value)
+            return str(self.value).lower()
 
     class Unary: 
         def __init__(self, operator, right):
@@ -187,7 +187,7 @@ class Expr:
             self.right = right
 
         def __str__(self):
-            return f"({self.operator.lexeme} {self.right})"
+            return f"({self.operator.lexeme} {self.right})".lower()
 
     class Binary:
         def __init__(self, left, operator, right):
@@ -196,14 +196,14 @@ class Expr:
             self.right = right
 
         def __str__(self):
-            return f"({self.operator.lexeme} {self.left} {self.right})"
+            return f"({self.operator.lexeme} {self.left} {self.right})".lower()
     
     class Grouping:
         def __init__(self, expression):
             self.expression = expression
 
         def __str__(self):
-            return f"(group {self.expression})"
+            return f"(group {self.expression})".lower()
 
 
 class Parser():
