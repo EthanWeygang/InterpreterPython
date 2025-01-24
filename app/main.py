@@ -19,7 +19,7 @@ class Scanner:
         self.start = 0
         self.current = 0
         self.line = 1
-        self.error_code = 0
+        self.errors = []
         self.keywords = {
                 "and":   "AND",
                 "class": "CLASS",
@@ -81,10 +81,10 @@ class Scanner:
                         self.Identifier()
                         continue
 
-                    print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
-                    self.error_code = 65
+                    self.LogError(f"[line {self.line}] Error: Unexpected character: {c}")
+                    
             
-        return self.error_code
+        return #maybe return something
         
     def Identifier(self):
         while self.IsAlphaNumeric(self.Peek()):
@@ -105,8 +105,7 @@ class Scanner:
             self.Advance()
         
         if self.atEnd():
-            print(f"[line {self.line}] Error: Unterminated string.",file=sys.stderr)
-            self.error_code = 65
+            self.LogError(f"[line {self.line}] Error: Unterminated string.")
             return
 
         self.Advance()
@@ -169,6 +168,17 @@ class Scanner:
 
         self.current += 1
         return True
+    
+    def HasErrors(self):
+        return len(self.errors) > 0
+    
+    def PrintErrors(self):
+        for error in self.errors:
+            print(error)
+
+    def LogError(self, error):
+        self.errors.append(error)
+
 
 
 class Expr:
@@ -210,10 +220,10 @@ class Parser():
         self.current = 0
         self.tokens = tokens
         self.errors = []
-        self.errorcode = 0
+        self.expr = ""
 
     def Parse(self):
-        return self.Equality()
+        self.expr = self.Equality()
 
     def Expression(self):
         return self.Equality()
@@ -313,7 +323,6 @@ class Parser():
     def Consume(self, type, message):
         if self.Check(type): 
             return self.Advance()
-        print("WORKINGGG", file=sys.stderr)
         self.LogError(message)
 
     def Check(self, type):
@@ -330,7 +339,9 @@ class Parser():
 
     def LogError(self, error):
         self.errors.append(f"Error: {error}")
-        self.errorcode = 65
+    
+    def PrintExpr(self):
+        print(self.expr)
 
     
 
@@ -373,13 +384,25 @@ def main():
                 print("EOF  null") # Placeholder, remove this line when implementing the scanner
                 return 0
 
+            errorcode = 0
 
             Scannerx = Scanner(file_contents)
-            exitcode = Scannerx.ScanTokens()
+            Scannerx.ScanTokens()
+            if Scannerx.has_errors():
+                Scannerx.PrintErrors()
+                errorcode = 65
+            Scannerx.PrintTokens()
+            
 
             Parserx = Parser(Scannerx.tokens)
-            print(Parserx.Parse())
-            exit(max(exitcode, Parserx.errorcode))
+            Parserx.Parse()
+            if Parserx.has_errors():
+                Parserx.PrintErrors()
+                errorcode = 65
+            Parserx.PrintExpr()
+            
+            exit(errorcode)
+
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
