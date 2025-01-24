@@ -179,7 +179,7 @@ class Expr:
             self.value = value
 
         def __str__(self):
-            return str(self.value).lower()
+            return "nil" if self.value is None else str(self.value).lower()
 
     class Unary: 
         def __init__(self, operator, right):
