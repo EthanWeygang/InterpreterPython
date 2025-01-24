@@ -341,7 +341,8 @@ def main():
 
             Scannerx = Scanner(file_contents)
             exitcode = Scannerx.ScanTokens()
-            exitcode.PrintTokens()
+            
+            Scannerx.PrintTokens()
             print("EOF")
             exit(exitcode)
                 
