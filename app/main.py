@@ -84,8 +84,6 @@ class Scanner:
                     print(f"[line {self.line}] Error: Unexpected character: {c}", file=sys.stderr)
                     self.error_code = 65
             
-        # self.PrintTokens()
-        # print("EOF")
         return self.error_code
         
     def Identifier(self):
@@ -342,7 +340,10 @@ def main():
                 return 0
 
             Scannerx = Scanner(file_contents)
-            exit(Scannerx.ScanTokens())
+            exitcode = Scannerx.ScanTokens()
+            exitcode.PrintTokens()
+            print("EOF")
+            exit(exitcode)
                 
 
     elif command == "parse":
