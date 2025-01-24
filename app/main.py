@@ -313,6 +313,7 @@ class Parser():
     def Consume(self, type, message):
         if self.Check(type): 
             return self.Advance()
+        print("WORKINGGG", file=sys.stderr)
         self.LogError(message)
 
     def Check(self, type):
