@@ -228,15 +228,16 @@ class Parser():
     
     def Comparison(self):
         expr = self.Term()
+        print(f"Entered Comparison with initial expr: {expr}", file=sys.stderr)
 
         while self.Match("GREATER") or self.Match("GREATER_EQUAL") or self.Match("LESS") or self.Match("LESS_EQUAL"):
             operator = self.Previous()
             right = self.Term()
-
             
-        
+            
+            print(f"Operator: {operator}, Type: {type(operator)}", file=sys.stderr)
             expr = Expr.Binary(expr, operator, right)
-        print(f"Operator: {operator}, Type: {type(operator)}", file=sys.stderr)
+        
         return expr
     
     def Term(self):
