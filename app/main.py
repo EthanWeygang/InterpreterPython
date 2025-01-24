@@ -388,7 +388,7 @@ def main():
 
             Scannerx = Scanner(file_contents)
             Scannerx.ScanTokens()
-            if Scannerx.has_errors():
+            if Scannerx.HasErrors():
                 Scannerx.PrintErrors()
                 errorcode = 65
             Scannerx.PrintTokens()
@@ -396,7 +396,7 @@ def main():
 
             Parserx = Parser(Scannerx.tokens)
             Parserx.Parse()
-            if Parserx.has_errors():
+            if Parserx.Haserrors():
                 Parserx.PrintErrors()
                 errorcode = 65
             Parserx.PrintExpr()
