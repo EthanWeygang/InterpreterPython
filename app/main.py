@@ -343,7 +343,7 @@ def main():
             exitcode = Scannerx.ScanTokens()
 
             Scannerx.PrintTokens()
-            print("EOF null")
+            print("EOF  null")
             exit(exitcode)
                 
 
