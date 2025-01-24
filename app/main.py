@@ -180,7 +180,6 @@ class Scanner:
         self.errors.append(error)
 
 
-
 class Expr:
     class Literal:
         def __init__(self, value):
@@ -214,7 +213,7 @@ class Expr:
             return f"(group {self.expression})".lower()
 
 
-class Parser():
+class Parser:
 
     def __init__(self, tokens):
         self.current = 0
@@ -223,7 +222,8 @@ class Parser():
         self.expr = ""
 
     def Parse(self):
-        self.expr = self.Equality()
+        resultexpr = self.Equality()
+        self.expr = resultexpr if resultexpr != None else "" 
 
     def Expression(self):
         return self.Equality()
@@ -342,12 +342,6 @@ class Parser():
     
     def PrintExpr(self):
         print(self.expr)
-
-    
-
-
-
-
 
 
 def main():
