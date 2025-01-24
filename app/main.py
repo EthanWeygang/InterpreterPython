@@ -161,6 +161,7 @@ class Scanner:
             print("I AM WORKING", file=sys.stderr)
             return
 
+        print("I AM ALSOE WORKING", self.tokens, file=sys.stderr)
         for t in self.tokens:
             print(t)
     
