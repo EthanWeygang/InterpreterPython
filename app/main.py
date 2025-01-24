@@ -366,11 +366,14 @@ def main():
                 return 0
 
             Scannerx = Scanner(file_contents)
-            exitcode = Scannerx.ScanTokens()
+            Scannerx.ScanTokens()
+            if Scannerx.HasErrors():
+                Scannerx.PrintErrors()
+                errorcode = 65
 
             Scannerx.PrintTokens()
             print("EOF  null")
-            exit(exitcode) 
+            exit(errorcode) 
 
     elif command == "parse":
         with open(filename) as file:
