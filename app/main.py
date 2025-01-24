@@ -174,7 +174,7 @@ class Scanner:
     
     def PrintErrors(self):
         for error in self.errors:
-            print(error)
+            print(error, file=sys.stderr)
 
     def LogError(self, error):
         self.errors.append(error)
@@ -335,7 +335,7 @@ class Parser():
     
     def PrintErrors(self):
         for error in self.errors:
-            print(error)
+            print(error, file=sys.stderr)
 
     def LogError(self, error):
         self.errors.append(f"Error: {error}")
