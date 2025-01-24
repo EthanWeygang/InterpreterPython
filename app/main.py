@@ -157,11 +157,6 @@ class Scanner:
 
 
     def PrintTokens(self):
-        if len(self.tokens) == 0:
-            print("I AM WORKING", file=sys.stderr)
-            return
-
-        print("I AM ALSOE WORKING", self.tokens, file=sys.stderr)
         for t in self.tokens:
             print(t)
     
@@ -319,8 +314,6 @@ class Parser():
         if self.Check(type): 
             return self.Advance()
         self.LogError(message)
-
-        raise Exception(f"[line {self.Peek().line}] {message}")
 
     def Check(self, type):
         if self.atEnd(): 
