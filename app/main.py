@@ -364,6 +364,8 @@ def main():
             if not file_contents:
                 print("EOF  null") # Placeholder, remove this line when implementing the scanner
                 return 0
+            
+            errorcode = 0
 
             Scannerx = Scanner(file_contents)
             Scannerx.ScanTokens()
