@@ -233,10 +233,10 @@ class Parser():
             operator = self.Previous()
             right = self.Term()
 
-            print(f"Operator: {operator}, Type: {type(operator)}", file=sys.stderr)
-
+            
+        
             expr = Expr.Binary(expr, operator, right)
-
+        print(f"Operator: {operator}, Type: {type(operator)}", file=sys.stderr)
         return expr
     
     def Term(self):
