@@ -373,10 +373,11 @@ def main():
 
 
             Scannerx = Scanner(file_contents)
-            Scannerx.ScanTokens()
+            exitcode = Scannerx.ScanTokens()
 
             Parserx = Parser(Scannerx.tokens)
             print(Parserx.Parse())
+            exit(exitcode)
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
