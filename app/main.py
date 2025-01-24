@@ -250,7 +250,7 @@ class Parser():
     def Factor(self):
         expr = self.Unary()
         while self.Match("SLASH") or self.Match("STAR"):
-            operator = self.Previous
+            operator = self.Previous()
             right = self.Unary()
             expr = Expr.Binary(expr, operator, right)
         
