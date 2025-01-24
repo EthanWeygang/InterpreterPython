@@ -257,6 +257,7 @@ class Parser:
             right = self.Factor()
             if right is None:
                 self.LogError("Empty group")
+                return None
             expr = Expr.Binary(expr, operator, right)
         
         return expr
@@ -290,6 +291,7 @@ class Parser:
             expr = self.Expression()
             if expr is None:
                 self.LogError("Empty Group")
+                return None
             self.Consume("RIGHT_PAREN", "Expect ')' after expression.")
             return Expr.Grouping(expr)
 
