@@ -232,6 +232,9 @@ class Parser():
         while self.Match("GREATER") or self.Match("GREATER_EQUAL") or self.Match("LESS") or self.Match("LESS_EQUAL"):
             operator = self.Previous()
             right = self.Term()
+
+            print(f"Operator: {operator}, Type: {type(operator)}")
+
             expr = Expr.Binary(expr, operator, right)
 
         return expr
