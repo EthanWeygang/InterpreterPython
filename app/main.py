@@ -210,6 +210,7 @@ class Parser():
         self.current = 0
         self.tokens = tokens
         self.errors = []
+        self.errorcode = 0
 
     def Parse(self):
         return self.Equality()
@@ -322,13 +323,15 @@ class Parser():
         return self.Peek().token_type == type
     
     def HasErrors(self):
-        pass
+        return len(self.errors) > 0
     
     def PrintErrors(self):
-        pass
+        for error in self.errors:
+            print(error)
 
     def LogError(self, error):
         self.errors.append(f"Error: {error}")
+        self.errorcode = 65
 
     
 
@@ -377,7 +380,7 @@ def main():
 
             Parserx = Parser(Scannerx.tokens)
             print(Parserx.Parse())
-            exit(exitcode)
+            exit(max(exitcode, Parserx.errorcode))
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
