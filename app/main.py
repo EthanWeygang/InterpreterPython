@@ -209,6 +209,7 @@ class Parser():
     def __init__(self, tokens):
         self.current = 0
         self.tokens = tokens
+        self.errors = []
 
     def Parse(self):
         return self.Equality()
@@ -243,6 +244,8 @@ class Parser():
         while self.Match("MINUS") or self.Match("PLUS"):
             operator = self.Previous()
             right = self.Factor()
+            if right is None:
+                self.LogError("Empty group")
             expr = Expr.Binary(expr, operator, right)
         
         return expr
@@ -274,6 +277,8 @@ class Parser():
         
         if self.Match("LEFT_PAREN"):
             expr = self.Expression()
+            if expr is None:
+                self.LogError("Empty Group")
             self.Consume("RIGHT_PAREN", "Expect ')' after expression.")
             return Expr.Grouping(expr)
 
@@ -307,6 +312,7 @@ class Parser():
     def Consume(self, type, message):
         if self.Check(type): 
             return self.Advance()
+        self.LogError(message)
 
         raise Exception(f"[line {self.Peek().line}] {message}")
 
@@ -314,6 +320,15 @@ class Parser():
         if self.atEnd(): 
             return False
         return self.Peek().token_type == type
+    
+    def HasErrors(self):
+        pass
+    
+    def PrintErrors(self):
+        pass
+
+    def LogError(self, error):
+        self.errors.append(f"Error: {error}")
 
     
 
