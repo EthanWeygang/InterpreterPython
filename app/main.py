@@ -385,7 +385,6 @@ def main():
             if Scannerx.HasErrors():
                 Scannerx.PrintErrors()
                 errorcode = 65
-            Scannerx.PrintTokens()
             
 
             Parserx = Parser(Scannerx.tokens)
