@@ -158,6 +158,7 @@ class Scanner:
 
     def PrintTokens(self):
         if len(self.tokens) == 0:
+            print("I AM WORKING", file=sys.stderr)
             return
 
         for t in self.tokens:
