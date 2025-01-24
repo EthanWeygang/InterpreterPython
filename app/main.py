@@ -344,8 +344,7 @@ def main():
 
             Scannerx.PrintTokens()
             print("EOF  null")
-            exit(exitcode)
-                
+            exit(exitcode) 
 
     elif command == "parse":
         with open(filename) as file:
