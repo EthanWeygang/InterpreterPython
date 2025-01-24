@@ -229,6 +229,8 @@ class Parser():
     def Comparison(self):
         expr = self.Term()
         print(f"Entered Comparison with initial expr: {expr}", file=sys.stderr)
+        print(f"Tokens: {self.tokens}", file=sys.stderr)
+
 
         while self.Match("GREATER") or self.Match("GREATER_EQUAL") or self.Match("LESS") or self.Match("LESS_EQUAL"):
             operator = self.Previous()
