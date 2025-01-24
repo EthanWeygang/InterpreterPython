@@ -157,7 +157,7 @@ class Scanner:
 
 
     def PrintTokens(self):
-        if self.tokens == None:
+        if len(self.tokens) == 0:
             return
 
         for t in self.tokens:
