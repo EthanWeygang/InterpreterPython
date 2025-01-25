@@ -374,7 +374,7 @@ class Interpreter:
             if text[-2:] == ".0": #this might be wrong
                 text = text[:-2] #might be wrong
             
-            return text.lower()
+            return text
         
         return str(obj)
     def HasErrors(self):
@@ -398,7 +398,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return not self.IsTruthy(right)
+                return "false" if self.IsTruthy(right) == "true" else "true"
 
         return None
     
@@ -455,15 +455,15 @@ class Interpreter:
         raise RuntimeError(operator, "Operand must be a number.") # this might not work
     
     def IsEqual(self, a, b):
-        if a == None and b == None: return True
-        if a == None: return False
+        if a == None and b == None: return "true"
+        if a == None: return "false"
 
-        return a == b
+        return "true" if a == b else "false"
     
     def IsTruthy(self, obj):
-        if obj == None: return False
+        if obj == None: return "false"
         if isinstance(obj, bool): return obj
-        return True
+        return "true"
 
     def Evaluate(self, expr):
         if isinstance(expr, Expr.Literal):
