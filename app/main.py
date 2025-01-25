@@ -367,7 +367,7 @@ class Interpreter:
             
     
     def Stringify(self, obj):
-        if obj == None: return None
+        if obj == None: return "nil"
 
         if isinstance(obj, float):
             text = str(obj)
@@ -402,7 +402,7 @@ class Interpreter:
             case "BANG":
                 return "false" if self.IsTruthy(right) == "true" else "true"
 
-        return None
+        return "nil"
     
     def VisitBinaryExpr(self, expr):
         left = self.evaluate(expr.left)
@@ -443,7 +443,7 @@ class Interpreter:
             case "EQUAL":
                 return self.IsEqual(left, right)
 
-        return None
+        return "nil"
     
 
     def CheckNumberOperands(self, operator, left, right):
