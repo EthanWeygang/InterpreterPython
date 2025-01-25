@@ -387,7 +387,7 @@ class Interpreter:
     def VisitLiteralExpr(self, expr):
         if expr == True: return "true"
         if expr == False: return "false"
-        return str(expr.value).lower
+        return str(expr.value)
 
     def VisitGroupingExpr(self, expr):
         return self.Evaluate(expr.expression)
