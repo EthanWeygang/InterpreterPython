@@ -374,7 +374,7 @@ class Interpreter:
             if text[-2:] == ".0": #this might be wrong
                 text = text[:-2] #might be wrong
             
-            return text
+            return text.lower()
         
         return str(obj)
     def HasErrors(self):
@@ -474,10 +474,6 @@ class Interpreter:
             return self.VisitUnaryExpr(expr)
         elif isinstance(expr, Expr.Binary):
             return self.VisitBinaryExpr(expr)
-    
-    
-
-
 
 
 def main():
