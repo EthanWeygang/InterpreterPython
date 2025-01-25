@@ -540,6 +540,7 @@ def main():
 
             errorcode = 0
 
+            Scannerx = Scanner(file_contents)
             Scannerx.ScanTokens()
             if Scannerx.HasErrors():
                 Scannerx.PrintErrors()
