@@ -402,7 +402,7 @@ class Interpreter:
 
         return None
     
-    def VisitBindaryExpr(self, expr):
+    def VisitBinaryExpr(self, expr):
         left = self.evaluate(expr.left)
         right = self.evaluate(expr.right)
 
@@ -466,7 +466,14 @@ class Interpreter:
         return True
 
     def Evaluate(self, expr):
-        return expr.accept(self)
+        if isinstance(expr, Expr.Literal):
+            return self.VisitLiteralExpr(expr)
+        elif isinstance(expr, Expr.Grouping):
+            return self.Evaluate(expr.expression)
+        elif isinstance(expr, Expr.Unary):
+            return self.VisitUnaryExpr(expr)
+        elif isinstance(expr, Expr.Binary):
+            return self.VisitBinaryExpr(expr)
     
     
 
