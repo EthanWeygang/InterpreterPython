@@ -385,6 +385,8 @@ class Interpreter:
         print(error.message + f"\n[line {error.token.line}]", file=sys.stderr) #may be wrong
 
     def VisitLiteralExpr(self, expr):
+        if expr == True: return "true"
+        if expr == "false": return "false"
         return expr.value
 
     def VisitGroupingExpr(self, expr):
@@ -437,7 +439,7 @@ class Interpreter:
                 self.CheckNumberOperands(self, expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
-                return not self.IsEqual(left, right)
+                return "false" if self.IsEqual(left, right) == True else "true"
             case "EQUAL":
                 return self.IsEqual(left, right)
 
