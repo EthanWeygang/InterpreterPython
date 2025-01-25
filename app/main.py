@@ -345,6 +345,133 @@ class Parser:
     def PrintExpr(self):
         print(self.expr)
 
+class RuntimeError:
+
+    def __init__(self, token, message):
+        self.token = token
+        self.message = message
+
+class Interpreter:
+
+    def __init__(self, expr):
+        self.expr = expr
+        self.errors = []
+    
+    def Interpret(self):
+        try:
+            value = self.Evaluate(self.expr)
+            print(self.Stringify(value))
+
+        except RuntimeError as error:
+            self.RuntimeError(error)
+            
+    
+    def Stringify(self, obj):
+        if obj == None: return None
+
+        if isinstance(obj, float):
+            text = str(obj)
+            if text[-2:] == ".0": #this might be wrong
+                text = text[:-2] #might be wrong
+            
+            return text
+        
+        return str(obj)
+    def HasErrors(self):
+        return len(self.errors) > 0
+
+    def RuntimeError(self, error):
+        self.errors.append(error)
+        print(error.message + f"\n[line {error.token.line}]", file=sys.stderr) #may be wrong
+
+    def VisitLiteralExpr(self, expr):
+        return expr.value
+
+    def VisitGroupingExpr(self, expr):
+        return self.Evaluate(expr.expression)
+    
+    def VisitUnaryExpr(self, expr):
+        right = self.evaluate(expr.right)
+
+        match expr.oparator.type:
+            case "MINUS":
+                self.CheckNumberOperand(expr.operator, right)
+                return -float(right)
+            case "BANG":
+                return not self.IsTruthy(right)
+
+        return None
+    
+    def VisitBindaryExpr(self, expr):
+        left = self.evaluate(expr.left)
+        right = self.evaluate(expr.right)
+
+        match expr.operator.type:
+            case "MINUS":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) - float(right)
+            case "SLASH":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) / float(right)
+            case "STAR":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) * float(right)
+            case "PLUS":
+                if isinstance(left, float) and isinstance(right, float):
+                    return float(left) + float(right)
+                
+                if isinstance(left, str) and isinstance(right, str):
+                    return str(left) + str(right)
+                
+                raise RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
+            case "GREATER":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) > float(right)
+            case "GREATER_EQUAL":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) >= float(right)
+            case "LESS":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) < float(right)
+            case "LESS_EQUAL":
+                self.CheckNumberOperands(self, expr.operator, left, right)
+                return float(left) <= float(right)
+            case "BANG_EQUAL":
+                return not self.IsEqual(left, right)
+            case "EQUAL":
+                return self.IsEqual(left, right)
+
+        return None
+    
+
+    def CheckNumberOperands(self, operator, left, right):
+        if isinstance(left, float) and isinstance(right, float):
+            return
+        raise RuntimeError(operator, "Operand must be numbers.") # this might not work
+
+    def CheckNumberOperand(self, operator, operand):
+        if isinstance(operand, float):
+            return
+        raise RuntimeError(operator, "Operand must be a number.") # this might not work
+    
+    def IsEqual(self, a, b):
+        if a == None and b == None: return True
+        if a == None: return False
+
+        return a == b
+    
+    def IsTruthy(self, obj):
+        if obj == None: return False
+        if isinstance(obj, bool): return obj
+        return True
+
+    def Evaluate(self, expr):
+        return expr.accept(self)
+    
+    
+
+
+
 
 def main():
     if len(sys.argv) < 3:
@@ -402,6 +529,36 @@ def main():
             Parserx.PrintExpr()
             
             exit(errorcode)
+    
+    elif command == "evaluate":
+        with open(filename) as file:
+            file_contents = file.read()
+
+            if not file_contents:
+                print("EOF  null") # Placeholder, remove this line when implementing the scanner
+                return 0
+
+            errorcode = 0
+
+            Scannerx.ScanTokens()
+            if Scannerx.HasErrors():
+                Scannerx.PrintErrors()
+                errorcode = 65
+            
+
+            Parserx = Parser(Scannerx.tokens)
+            Parserx.Parse()
+            if Parserx.HasErrors():
+                Parserx.PrintErrors()
+                errorcode = 65
+            
+            Interpreterx = Interpreter(Parserx.expr)
+            Interpreterx.Interpret()
+            if Interpreterx.HasErrors():
+                errorcode = 70
+            
+            exit(errorcode)
+
 
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
