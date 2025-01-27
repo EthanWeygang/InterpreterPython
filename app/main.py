@@ -392,8 +392,8 @@ class Interpreter:
     def VisitLiteralExpr(self, expr):
         if expr is None: return "nil"
         if isinstance(expr, bool):
-            if expr.value == True: return "true"
-            if expr.value == False: return "false"
+            if expr.value == True: return True
+            if expr.value == False: return False
         return expr.value
 
     def VisitGroupingExpr(self, expr):
@@ -407,7 +407,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return "true" if self.IsTruthy(right) == "false" else "true"
+                return True if self.IsTruthy(right) == "false" else True
 
         return "nil"
      
@@ -446,7 +446,7 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
-                return "false" if self.IsEqual(left, right) == True else "true"
+                return "false" if self.IsEqual(left, right) == True else True
             case "EQUAL":
                 print(self.IsEqual(left, right), file=sys.stderr)
                 return self.IsEqual(left, right)
@@ -469,13 +469,13 @@ class Interpreter:
         if a == None and b == None: return True
         if a == None: return False
 
-        return "true" if a == b else "false"
+        return True if a == b else False
  
     def IsTruthy(self, obj):
         print("obj:",obj, file=sys.stderr)
         if obj == False: 
             return "false"
-        return "true"
+        return True
   
     def Evaluate(self, expr):
         print(expr, file=sys.stderr)
