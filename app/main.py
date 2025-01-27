@@ -472,7 +472,7 @@ class Interpreter:
     
     def IsTruthy(self, obj):
         print(obj, file=sys.stderr)
-        if obj == "false": 
+        if obj == False: 
             return "false"
         return "true"
   
