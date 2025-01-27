@@ -402,7 +402,7 @@ class Interpreter:
                 return -float(right)
             case "BANG":
                 print("aaa", self.IsTruthy(right) == "false")
-                return "true" if self.IsTruthy(right) == "false" else "true"
+                return "false" if self.IsTruthy(right) == "false" else "true"
 
         return "nil"
     
