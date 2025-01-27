@@ -408,6 +408,9 @@ class Interpreter:
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
+        print(left,file=sys.stderr)
+        print(type(left),file=sys.stderr)
+
         match expr.operator.token_type:
             case "MINUS":
                 self.CheckNumberOperands(expr.operator, left, right)
@@ -423,7 +426,6 @@ class Interpreter:
                     return float(left) + float(right)
                 
                 if isinstance(left, str) and isinstance(right, str):
-                    print("STRINGS", left, right)
                     return str(left) + str(right)
                 
                 raise RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
