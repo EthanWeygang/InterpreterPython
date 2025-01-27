@@ -374,7 +374,8 @@ class Interpreter:
             if text[-2:] == ".0":
                 text = int(obj) 
             return text
-        
+
+
         return str(obj)
     def HasErrors(self):
         return len(self.errors) > 0
