@@ -484,6 +484,7 @@ class Interpreter:
         elif isinstance(expr, Expr.Unary):
             return self.VisitUnaryExpr(expr)
         elif isinstance(expr, Expr.Binary):
+            print("BINARY ^", file=sys.stderr)
             return self.VisitBinaryExpr(expr)
 
 
