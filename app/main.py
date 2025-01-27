@@ -410,7 +410,7 @@ class Interpreter:
                 return "true" if self.IsTruthy(right) == "false" else "true"
 
         return "nil"
-    
+     
     def VisitBinaryExpr(self, expr):
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
