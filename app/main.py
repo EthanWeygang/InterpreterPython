@@ -401,7 +401,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return "true" if self.IsTruthy(right) == "true" else "false"
+                return "false" if self.IsTruthy(right) == "true" else "false"
 
         return "nil"
     
@@ -465,7 +465,7 @@ class Interpreter:
     
     def IsTruthy(self, obj):
         if obj == None: return "false"
-        if isinstance(obj, bool): return obj
+        if isinstance(obj, bool): return "true" if obj == True else "false"
         return "true"
 
     def Evaluate(self, expr):
