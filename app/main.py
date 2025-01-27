@@ -385,8 +385,8 @@ class Interpreter:
 
     def VisitLiteralExpr(self, expr):
         if expr.value is None: return "nil"
-        if expr == "True": return "true"
-        if expr == "False": return "false"
+        if expr == "true": return "true"
+        if expr == "false": return "false"
         return expr.value
 
     def VisitGroupingExpr(self, expr):
