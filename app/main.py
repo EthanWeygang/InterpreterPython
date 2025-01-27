@@ -452,8 +452,7 @@ class Interpreter:
     def CheckNumberOperands(self, operator, left, right):
         if isinstance(left, float) and isinstance(right, float):
             return
-        print(operator,file=sys.stderr)
-        print(type(operator),file=sys.stderr)
+        print(f"Operator: {operator.lexeme}, Left operand: {left} ({type(left)}), Right operand: {right} ({type(right)})", file=sys.stderr)
         raise RuntimeError(operator, "Operand must be numbers.") # this might not work
 
     def CheckNumberOperand(self, operator, operand):
