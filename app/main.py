@@ -375,7 +375,6 @@ class Interpreter:
                 text = int(obj) 
             return text
 
-
         return str(obj)
     def HasErrors(self):
         return len(self.errors) > 0
@@ -401,7 +400,6 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-  
                 return "true" if self.IsTruthy(right) == "false" else "true"
 
         return "nil"
