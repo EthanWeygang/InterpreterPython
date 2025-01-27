@@ -449,12 +449,12 @@ class Interpreter:
     def CheckNumberOperands(self, operator, left, right):
         if isinstance(left, float) and isinstance(right, float):
             return
-        raise RuntimeError(operator, "Operand must be numbers.") # this might not work
+        raise RuntimeError(f"{operator} Operand must be a number.") # this might not work
 
     def CheckNumberOperand(self, operator, operand):
         if isinstance(operand, float):
             return
-        raise RuntimeError(operator, "Operand must be a number.") # this might not work
+        raise RuntimeError(f"{operator} Operand must be a number.") # this might not work
     
     def IsEqual(self, a, b):
         if a == None and b == None: return "true"
