@@ -397,7 +397,7 @@ class Interpreter:
     def VisitUnaryExpr(self, expr):
         right = self.Evaluate(expr.right)
 
-        match expr.oparator.type:
+        match expr.operator.type:
             case "MINUS":
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
