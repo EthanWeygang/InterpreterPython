@@ -381,7 +381,7 @@ class Interpreter:
 
     def RuntimeError(self, error):
         self.errors.append(error)
-        print(error.message + f"\n[line {error.token.line}]", file=sys.stderr) #may be wrong
+        print(error.message + f"\n[line ]", file=sys.stderr) #may be wrong {error.token.line}
 
     def VisitLiteralExpr(self, expr):
         if expr is None: return "nil"
