@@ -448,6 +448,7 @@ class Interpreter:
             case "BANG_EQUAL":
                 return "false" if self.IsEqual(left, right) == True else "true"
             case "EQUAL":
+                print(self.IsEqual(left, right), file=sys.stderr)
                 return self.IsEqual(left, right)
 
         return "nil"
