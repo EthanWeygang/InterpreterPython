@@ -413,7 +413,7 @@ class Interpreter:
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
-        print(right,file=sys.stderr)
+        print("right =",right,file=sys.stderr)
         # print(type(right),file=sys.stderr)
 
         match expr.operator.token_type:
