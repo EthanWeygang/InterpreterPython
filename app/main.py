@@ -24,7 +24,7 @@ class Scanner:
                 "and":   "AND",
                 "class": "CLASS",
                 "else":  "ELSE",
-                False: False,
+                "false": "FALSE",
                 "for":   "FOR",
                 "fun":   "FUN",
                 "if":    "IF",
@@ -34,7 +34,7 @@ class Scanner:
                 "return":"RETURN",
                 "super": "SUPER",
                 "this":  "THIS",
-                True:  True,
+                "true":  "TRUE",
                 "var":   "VAR",
                 "while": "WHILE"
         }
@@ -374,6 +374,11 @@ class Interpreter:
             if text[-2:] == ".0":
                 text = int(obj) 
             return text
+        
+        if isinstance(obj, bool):
+            if obj == True:
+                return "true"
+            return "false"
 
         return str(obj)
     def HasErrors(self):
