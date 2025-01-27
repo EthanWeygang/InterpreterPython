@@ -410,14 +410,13 @@ class Interpreter:
 
         match expr.operator.token_type:
             case "MINUS":
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) - float(right)
             case "SLASH":
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) / float(right)
             case "STAR":
-                print(expr.operator, left, right)
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) * float(right)
             case "PLUS":
                 if isinstance(left, float) and isinstance(right, float):
@@ -428,16 +427,16 @@ class Interpreter:
                 
                 raise RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
             case "GREATER":
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) > float(right)
             case "GREATER_EQUAL":
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) >= float(right)
             case "LESS":
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) < float(right)
             case "LESS_EQUAL":
-                self.CheckNumberOperands(self, expr.operator, left, right)
+                self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
                 return "false" if self.IsEqual(left, right) == True else "true"
