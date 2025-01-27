@@ -401,7 +401,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return "false" if self.IsTruthy(right) == "true" else "true"
+                return "true" if self.IsTruthy(right) == "true" else "false"
 
         return "nil"
     
