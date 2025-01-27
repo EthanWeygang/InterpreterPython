@@ -390,12 +390,14 @@ class Interpreter:
 
     def VisitLiteralExpr(self, expr):
         if expr is None: return "nil"
-        if expr.value == True:
-            print(f"{expr} == TRUE", file=sys.stderr) 
-            return True
-        if expr.value == False:
-            print(f"{expr} == FALSE", file=sys.stderr) 
-            return False
+        if isinstance(expr, bool):
+            if expr.value == True:
+                print(f"{expr} == TRUE", file=sys.stderr) 
+                return True
+            if expr.value == False:
+                print(f"{expr} == FALSE", file=sys.stderr) 
+                return False
+            
         return expr.value
 
     def VisitGroupingExpr(self, expr):
