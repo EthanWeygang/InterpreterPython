@@ -323,8 +323,8 @@ class Parser:
         if self.atEnd(): return None
         return self.tokens[self.current]
 
-    def Consume(self, type, message):
-        if self.Check(type): 
+    def Consume(self, token_type, message):
+        if self.Check(token_type): 
             return self.Advance()
         self.LogError(message)
 
@@ -385,7 +385,6 @@ class Interpreter:
         print(error.message + f"\n[line {error.token.line}]", file=sys.stderr) #may be wrong
 
     def VisitLiteralExpr(self, expr):
-        print("ITS ", expr, type(expr),expr.value, file=sys.stderr)
         if expr is None: return "nil"
         if expr.value == True: return "true"
         if expr.value == False: return "false"
@@ -397,7 +396,7 @@ class Interpreter:
     def VisitUnaryExpr(self, expr):
         right = self.Evaluate(expr.right)
 
-        match expr.operator.type:
+        match expr.operator.token_type:
             case "MINUS":
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
@@ -410,7 +409,7 @@ class Interpreter:
         left = self.evaluate(expr.left)
         right = self.evaluate(expr.right)
 
-        match expr.operator.type:
+        match expr.operator.token_type:
             case "MINUS":
                 self.CheckNumberOperands(self, expr.operator, left, right)
                 return float(left) - float(right)
