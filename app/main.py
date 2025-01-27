@@ -408,8 +408,8 @@ class Interpreter:
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
-        print(right,file=sys.stderr)
-        print(type(right),file=sys.stderr)
+        # print(right,file=sys.stderr)
+        # print(type(right),file=sys.stderr)
 
         match expr.operator.token_type:
             case "MINUS":
@@ -452,6 +452,8 @@ class Interpreter:
     def CheckNumberOperands(self, operator, left, right):
         if isinstance(left, float) and isinstance(right, float):
             return
+        print(operator,file=sys.stderr)
+        print(type(operator),file=sys.stderr)
         raise RuntimeError(operator, "Operand must be numbers.") # this might not work
 
     def CheckNumberOperand(self, operator, operand):
