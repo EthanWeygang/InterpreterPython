@@ -389,7 +389,8 @@ class Interpreter:
         if expr.value is None: return "nil"
         if expr == True: return "true"
         if expr == False: return "false"
-        return (str(expr.value)).lower()
+        #return (str(expr.value)).lower()
+        return expr.value
 
     def VisitGroupingExpr(self, expr):
         return self.Evaluate(expr.expression)
