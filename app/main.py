@@ -8,7 +8,7 @@ class Token:
         self.literal = literal
     
     def __str__(self):
-        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else 'nil'}"
+        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else 'null'}"
 
 
 class Scanner:
@@ -386,6 +386,7 @@ class Interpreter:
         print(error.message + f"\n[line {error.token.line}]", file=sys.stderr) #may be wrong
 
     def VisitLiteralExpr(self, expr):
+        if expr.value is None: return "nil"
         if expr == True: return "true"
         if expr == False: return "false"
         return (str(expr.value)).lower()
