@@ -378,7 +378,8 @@ class Interpreter:
         if isinstance(obj, bool):
             if obj == True:
                 return "true"
-            return "false"
+            elif obj == False:
+                return "false"
 
         return str(obj)
     def HasErrors(self):
