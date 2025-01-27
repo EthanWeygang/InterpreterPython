@@ -470,13 +470,16 @@ class Interpreter:
 
     def Evaluate(self, expr):
         if isinstance(expr, Expr.Literal):
-            return self.VisitLiteralExpr(expr)
+            return self.RemoveLeadingZero(self.VisitLiteralExpr(expr))
         elif isinstance(expr, Expr.Grouping):
             return self.Evaluate(expr.expression)
         elif isinstance(expr, Expr.Unary):
             return self.VisitUnaryExpr(expr)
         elif isinstance(expr, Expr.Binary):
-            return self.VisitBinaryExpr(expr)
+            return self.RemoveLeadingZero(self.VisitBinaryExpr(expr))
+    
+    def RemoveLeadingZero(self, number):
+        return int(number) if str(number)[-2] == ".0" else number
 
 
 def main():
