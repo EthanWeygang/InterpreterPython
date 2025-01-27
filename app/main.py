@@ -416,6 +416,7 @@ class Interpreter:
                 self.CheckNumberOperands(self, expr.operator, left, right)
                 return float(left) / float(right)
             case "STAR":
+                print(expr.operator, left, right)
                 self.CheckNumberOperands(self, expr.operator, left, right)
                 return float(left) * float(right)
             case "PLUS":
