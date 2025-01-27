@@ -414,7 +414,7 @@ class Interpreter:
     def VisitBinaryExpr(self, expr):
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
- 
+
         match expr.operator.token_type:
             case "MINUS":
                 self.CheckNumberOperands(expr.operator, left, right)
@@ -471,7 +471,9 @@ class Interpreter:
         return "true" if a == b else "false"
     
     def IsTruthy(self, obj):
-        if obj == "false": return "false"
+        print(obj, file=sys.stderr)
+        if obj == "false": 
+            return "false"
         return "true"
 
     def Evaluate(self, expr):
