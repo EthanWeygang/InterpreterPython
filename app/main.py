@@ -280,8 +280,8 @@ class Parser:
         return self.Primary()
     
     def Primary(self):
-        if self.Match(False): return Expr.Literal(False)
-        if self.Match(True): return Expr.Literal(True)
+        if self.Match("FALSE"): return Expr.Literal(False)
+        if self.Match("TRUE"): return Expr.Literal(True)
         if self.Match("NIL"): return Expr.Literal(None)
 
         if self.Match("NUMBER") or self.Match("STRING"):
@@ -378,7 +378,6 @@ class Interpreter:
         if isinstance(obj, bool):
             if obj == True:
                 return "true"
-            return "false"
 
         return str(obj)
     def HasErrors(self):
@@ -390,14 +389,8 @@ class Interpreter:
 
     def VisitLiteralExpr(self, expr):
         if expr is None: return "nil"
-        if isinstance(expr, bool):
-            if expr.value == True:
-                print(f"{expr} == TRUE", file=sys.stderr) 
-                return True
-            if expr.value == False:
-                print(f"{expr} == FALSE", file=sys.stderr) 
-                return False
-            
+        if expr.value == True: return "true"
+        if expr.value == False: return "false"
         return expr.value
 
     def VisitGroupingExpr(self, expr):
@@ -411,7 +404,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return True if self.IsTruthy(right) == False else True
+                return "true" if self.IsTruthy(right) == "false" else "true"
 
         return "nil"
     
@@ -419,8 +412,8 @@ class Interpreter:
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
-        print("right =",right,file=sys.stderr)
-        # print(type(right),file=sys.stderr)
+        print(right,file=sys.stderr)
+        print(type(right),file=sys.stderr)
 
         match expr.operator.token_type:
             case "MINUS":
@@ -430,11 +423,10 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) / float(right)
             case "STAR":
-                print(f"Operator: {expr.operator.lexeme}, Left operand: {left} ({type(left)}), Right operand: {right} ({type(right)})", file=sys.stderr)
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) * float(right)
             case "PLUS":
-                if isinstance(left, float) and isinstance(right, float): 
+                if isinstance(left, float) and isinstance(right, float):
                     return float(left) + float(right)
                 
                 if isinstance(left, str) and isinstance(right, str):
@@ -454,7 +446,7 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
-                return False if self.IsEqual(left, right) == True else True
+                return "false" if self.IsEqual(left, right) == True else "true"
             case "EQUAL":
                 return self.IsEqual(left, right)
 
@@ -473,17 +465,16 @@ class Interpreter:
         raise RuntimeError(operator, "Operand must be a number.") # this might not work
     
     def IsEqual(self, a, b):
-        if a == None and b == None: return True
-        if a == None: return False
+        if a == None and b == None: return "true"
+        if a == None: return "false"
 
-        return True if a == b else False
+        return "true" if a == b else "false"
     
     def IsTruthy(self, obj):
-        if obj == False: return False
-        return True
+        if obj == "false": return "false"
+        return "true"
 
     def Evaluate(self, expr):
-        print(expr, file=sys.stderr)
         if isinstance(expr, Expr.Literal):
             return self.VisitLiteralExpr(expr)
         elif isinstance(expr, Expr.Grouping):
