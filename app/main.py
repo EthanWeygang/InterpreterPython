@@ -348,8 +348,7 @@ class Parser:
 
 class RuntimeError:
 
-    def __init__(self, token, message):
-        self.token = token
+    def __init__(self, message):
         self.message = message
 
 class Interpreter:
@@ -449,14 +448,12 @@ class Interpreter:
     def CheckNumberOperands(self, operator, left, right):
         if isinstance(left, float) and isinstance(right, float):
             return
-        error = RuntimeError(operator, "Operand must be numbers.")
-        raise error.message
+        raise RuntimeError("Operand must be numbers.")
 
     def CheckNumberOperand(self, operator, operand):
         if isinstance(operand, float):
             return
-        error = RuntimeError(operator, "Operand must be numbers.")
-        raise error.message
+        raise RuntimeError("Operand must be numbers.")
     
     def IsEqual(self, a, b):
         if a == None and b == None: return "true"
