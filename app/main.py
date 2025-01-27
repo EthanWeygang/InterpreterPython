@@ -365,7 +365,6 @@ class Interpreter:
 
         except RuntimeError as error:
             self.RuntimeError(error)
-            
     
     def Stringify(self, obj):
         if obj == None: return "nil"
