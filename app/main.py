@@ -413,7 +413,7 @@ class Interpreter:
 
     def IsTruthy(self, obj):
         print("obj:",obj, file=sys.stderr)
-        if obj == False: 
+        if obj == False or obj == "nil" or obj == None: 
             return False
         return True
 
