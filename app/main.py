@@ -318,6 +318,7 @@ class Parser:
     def Previous(self):
         return self.tokens[self.current - 1]
     
+    
     def Peek(self):
         if self.atEnd(): return None
         return self.tokens[self.current]
