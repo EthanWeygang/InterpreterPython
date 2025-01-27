@@ -471,7 +471,7 @@ class Interpreter:
         return "true" if a == b else "false"
     
     def IsTruthy(self, obj):
-        print(obj, file=sys.stderr)
+        print("obj:",obj, file=sys.stderr)
         if obj == False: 
             return "false"
         return "true"
