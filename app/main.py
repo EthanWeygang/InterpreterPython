@@ -24,7 +24,7 @@ class Scanner:
                 "and":   "AND",
                 "class": "CLASS",
                 "else":  "ELSE",
-                "false": "FALSE",
+                False: False,
                 "for":   "FOR",
                 "fun":   "FUN",
                 "if":    "IF",
@@ -34,7 +34,7 @@ class Scanner:
                 "return":"RETURN",
                 "super": "SUPER",
                 "this":  "THIS",
-                "true":  "TRUE",
+                True:  True,
                 "var":   "VAR",
                 "while": "WHILE"
         }
@@ -280,8 +280,8 @@ class Parser:
         return self.Primary()
     
     def Primary(self):
-        if self.Match("FALSE"): return Expr.Literal(False)
-        if self.Match("TRUE"): return Expr.Literal(True)
+        if self.Match(False): return Expr.Literal(False)
+        if self.Match(True): return Expr.Literal(True)
         if self.Match("NIL"): return Expr.Literal(None)
 
         if self.Match("NUMBER") or self.Match("STRING"):
@@ -385,8 +385,8 @@ class Interpreter:
 
     def VisitLiteralExpr(self, expr):
         if expr is None: return "nil"
-        if expr.value == True: return "true"
-        if expr.value == False: return "false"
+        if expr.value == True: return True
+        if expr.value == False: return False
         return expr.value
 
     def VisitGroupingExpr(self, expr):
@@ -400,7 +400,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return "true" if self.IsTruthy(right) == "false" else "true"
+                return True if self.IsTruthy(right) == False else True
 
         return "nil"
     
@@ -442,7 +442,7 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
-                return "false" if self.IsEqual(left, right) == True else "true"
+                return False if self.IsEqual(left, right) == True else True
             case "EQUAL":
                 return self.IsEqual(left, right)
 
@@ -461,14 +461,14 @@ class Interpreter:
         raise RuntimeError(operator, "Operand must be a number.") # this might not work
     
     def IsEqual(self, a, b):
-        if a == None and b == None: return "true"
-        if a == None: return "false"
+        if a == None and b == None: return True
+        if a == None: return False
 
-        return "true" if a == b else "false"
+        return True if a == b else False
     
     def IsTruthy(self, obj):
-        if obj == "false": return "false"
-        return "true"
+        if obj == False: return False
+        return True
 
     def Evaluate(self, expr):
         if isinstance(expr, Expr.Literal):
