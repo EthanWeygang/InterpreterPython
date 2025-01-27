@@ -186,7 +186,7 @@ class Expr:
             self.value = value
 
         def __str__(self):
-            return "nil" if self.value is None else str(self.value).lower()
+            return "nil" if self.value is None else str(self.value)
 
     class Unary: 
         def __init__(self, operator, right):
@@ -194,7 +194,7 @@ class Expr:
             self.right = right
 
         def __str__(self):
-            return f"({self.operator.lexeme} {self.right})".lower()
+            return f"({self.operator.lexeme} {self.right})"
 
     class Binary:
         def __init__(self, left, operator, right):
@@ -203,14 +203,14 @@ class Expr:
             self.right = right
 
         def __str__(self):
-            return f"({self.operator.lexeme} {self.left} {self.right})".lower()
+            return f"({self.operator.lexeme} {self.left} {self.right})"
     
     class Grouping:
         def __init__(self, expression):
             self.expression = expression
 
         def __str__(self):
-            return f"(group {self.expression})".lower()
+            return f"(group {self.expression})"
 
 
 class Parser:
@@ -318,7 +318,7 @@ class Parser:
     def Previous(self):
         return self.tokens[self.current - 1]
     
-    
+
     def Peek(self):
         if self.atEnd(): return None
         return self.tokens[self.current]
