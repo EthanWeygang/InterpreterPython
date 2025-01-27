@@ -367,14 +367,14 @@ class Interpreter:
             self.RuntimeError(error)
     
     def Stringify(self, obj):
-        print(obj)
+    
         if obj == None: return "nil"
 
         if isinstance(obj, float):
             text = str(obj)
             if text[-2:] == ".0": #this might be wrong
                 text = int(obj) #might be wrong
-            print(text,file=sys.stderr)
+            print(text)
             return text
         
         return str(obj)
