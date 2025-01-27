@@ -407,10 +407,16 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return True if self.IsTruthy(right) == False else True
+                return not self.IsTruthy(right)
 
         return "nil"
-     
+
+    def IsTruthy(self, obj):
+        print("obj:",obj, file=sys.stderr)
+        if obj == False: 
+            return False
+        return True
+
     def VisitBinaryExpr(self, expr):
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
@@ -469,12 +475,6 @@ class Interpreter:
         if a == None: return False
 
         return True if a == b else False
- 
-    def IsTruthy(self, obj):
-        print("obj:",obj, file=sys.stderr)
-        if obj == False: 
-            return False
-        return True
   
     def Evaluate(self, expr):
         print(expr, file=sys.stderr)
