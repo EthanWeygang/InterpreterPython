@@ -367,7 +367,6 @@ class Interpreter:
             self.RuntimeError(error)
     
     def Stringify(self, obj):
-        print(type(obj))
         if obj == None: return "nil"
 
         if isinstance(obj, float):
