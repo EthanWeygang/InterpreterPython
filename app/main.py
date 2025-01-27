@@ -469,7 +469,7 @@ class Interpreter:
         if a == None: return "false"
 
         return "true" if a == b else "false"
-    
+
     def IsTruthy(self, obj):
         print("obj:",obj, file=sys.stderr)
         if obj == False: 
