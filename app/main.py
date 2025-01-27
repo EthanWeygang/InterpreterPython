@@ -346,7 +346,7 @@ class Parser:
     def PrintExpr(self):
         print(self.expr)
 
-class RuntimeError:
+class RuntimeError(Exception):
 
     def __init__(self, message):
         self.message = message
