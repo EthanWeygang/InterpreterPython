@@ -385,7 +385,6 @@ class Interpreter:
 
     def VisitLiteralExpr(self, expr):
         print("ITS ", expr, type(expr),expr.value, file=sys.stderr)
-        print()
         if expr is None: return "nil"
         if expr == "true": return "true"
         if expr == "false": return "false"
