@@ -423,6 +423,7 @@ class Interpreter:
                     return float(left) + float(right)
                 
                 if isinstance(left, str) and isinstance(right, str):
+                    print("STRINGS", left, right)
                     return str(left) + str(right)
                 
                 raise RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
