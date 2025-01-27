@@ -424,6 +424,7 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) / float(right)
             case "STAR":
+                print(f"Operator: {expr.operator.lexeme}, Left operand: {left} ({type(left)}), Right operand: {right} ({type(right)})", file=sys.stderr)
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) * float(right)
             case "PLUS":
@@ -457,7 +458,7 @@ class Interpreter:
     def CheckNumberOperands(self, operator, left, right):
         if isinstance(left, float) and isinstance(right, float):
             return
-        print(f"Operator: {operator.lexeme}, Left operand: {left} ({type(left)}), Right operand: {right} ({type(right)})", file=sys.stderr)
+        
         raise RuntimeError(operator, "Operand must be numbers.") # this might not work
 
     def CheckNumberOperand(self, operator, operand):
