@@ -387,6 +387,7 @@ class Interpreter:
         if expr.value is None: return "nil"
         if expr == True: return "true"
         if expr == False: return "false"
+        print(type(expr))
         if not isinstance(expr, float) or not isinstance(expr, int):
             return (str(expr.value)).lower()
         return expr.value
