@@ -405,8 +405,8 @@ class Interpreter:
         return "nil"
     
     def VisitBinaryExpr(self, expr):
-        left = self.evaluate(expr.left)
-        right = self.evaluate(expr.right)
+        left = self.Evaluate(expr.left)
+        right = self.Evaluate(expr.right)
 
         match expr.operator.token_type:
             case "MINUS":
