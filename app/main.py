@@ -466,8 +466,8 @@ class Interpreter:
         raise RuntimeError(operator, "Operand must be a number.") # this might not work
     
     def IsEqual(self, a, b):
-        if a == None and b == None: return "true"
-        if a == None: return "false"
+        if a == None and b == None: return True
+        if a == None: return False
 
         return "true" if a == b else "false"
  
