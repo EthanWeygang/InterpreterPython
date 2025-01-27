@@ -465,8 +465,9 @@ class Interpreter:
     
     def IsTruthy(self, obj):
         if obj == None: return "false"
-        if isinstance(obj, bool): return "true" if obj.value == True else "false"
-        return "true"
+        if isinstance(obj, bool): return "true" if obj.value == True else "false" #so messy dont think this line is needed
+        if obj.value == "false":
+            return "true"
 
     def Evaluate(self, expr):
         if isinstance(expr, Expr.Literal):
