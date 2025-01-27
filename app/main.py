@@ -373,7 +373,7 @@ class Interpreter:
             text = str(obj)
             if text[-2:] == ".0": #this might be wrong
                 text = int(obj) #might be wrong
-            
+            print(text,file=sys.stderr)
             return text
         
         return str(obj)
