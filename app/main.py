@@ -386,8 +386,8 @@ class Interpreter:
     def VisitLiteralExpr(self, expr):
         print("ITS ", expr, type(expr),expr.value, file=sys.stderr)
         if expr is None: return "nil"
-        if expr == "true": return "true"
-        if expr == "false": return "false"
+        if expr.value == True: return "true"
+        if expr.value == False: return "false"
         return expr.value
 
     def VisitGroupingExpr(self, expr):
