@@ -367,16 +367,16 @@ class Interpreter:
             self.RuntimeError(error)
     
     def Stringify(self, obj):
-        if obj == None: return "nil"
+        if obj is None:
+            return "nil"
 
         if isinstance(obj, float):
-            text = str(obj)
-            if text[-2:] == ".0": #this might be wrong
-                text = text[:-2] #might be wrong
-            
-            return text
-        
+            if obj.is_integer():
+                return str(int(obj))
+            return str(obj)
+
         return str(obj)
+
     def HasErrors(self):
         return len(self.errors) > 0
 
@@ -470,16 +470,13 @@ class Interpreter:
 
     def Evaluate(self, expr):
         if isinstance(expr, Expr.Literal):
-            return self.RemoveLeadingZero(self.VisitLiteralExpr(expr))
+            return self.VisitLiteralExpr(expr)
         elif isinstance(expr, Expr.Grouping):
             return self.Evaluate(expr.expression)
         elif isinstance(expr, Expr.Unary):
             return self.VisitUnaryExpr(expr)
         elif isinstance(expr, Expr.Binary):
-            return self.RemoveLeadingZero(self.VisitBinaryExpr(expr))
-    
-    def RemoveLeadingZero(self, number):
-        return int(number) if str(number)[-2] == ".0" else number
+            return self.VisitBinaryExpr(expr)
 
 
 def main():
