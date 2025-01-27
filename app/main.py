@@ -464,9 +464,9 @@ class Interpreter:
         return "true" if a == b else "false"
     
     def IsTruthy(self, obj):
-        print("ist",obj, "does it work", obj == "false", file=sys.stderr)
 
         if obj == "false": return "false"
+        print("it worked!", file=sys.stderr)
         return "true"
 
     def Evaluate(self, expr):
