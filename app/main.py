@@ -8,7 +8,7 @@ class Token:
         self.literal = literal
     
     def __str__(self):
-        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else 'null'}"
+        return f"{self.token_type} {self.lexeme} {self.literal if self.literal != None else 'nil'}"
 
 
 class Scanner:
@@ -186,7 +186,7 @@ class Expr:
             self.value = value
 
         def __str__(self):
-            return "nil" if self.value is None else str(self.value)
+            return "nil" if self.value is None else str(self.value).lower()
 
     class Unary: 
         def __init__(self, operator, right):
@@ -194,7 +194,7 @@ class Expr:
             self.right = right
 
         def __str__(self):
-            return f"({self.operator.lexeme} {self.right})"
+            return f"({self.operator.lexeme} {self.right})".lower()
 
     class Binary:
         def __init__(self, left, operator, right):
@@ -203,14 +203,14 @@ class Expr:
             self.right = right
 
         def __str__(self):
-            return f"({self.operator.lexeme} {self.left} {self.right})"
+            return f"({self.operator.lexeme} {self.left} {self.right})".lower()
     
     class Grouping:
         def __init__(self, expression):
             self.expression = expression
 
         def __str__(self):
-            return f"(group {self.expression})"
+            return f"(group {self.expression})".lower()
 
 
 class Parser:
@@ -318,7 +318,7 @@ class Parser:
     def Previous(self):
         return self.tokens[self.current - 1]
     
-
+    
     def Peek(self):
         if self.atEnd(): return None
         return self.tokens[self.current]
