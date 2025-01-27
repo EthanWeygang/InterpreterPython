@@ -407,7 +407,7 @@ class Interpreter:
                 self.CheckNumberOperand(expr.operator, right)
                 return -float(right)
             case "BANG":
-                return True if self.IsTruthy(right) == "false" else True
+                return True if self.IsTruthy(right) == False else True
 
         return "nil"
      
@@ -446,7 +446,7 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
-                return "false" if self.IsEqual(left, right) == True else True
+                return False if self.IsEqual(left, right) == True else True
             case "EQUAL":
                 print(self.IsEqual(left, right), file=sys.stderr)
                 return self.IsEqual(left, right)
@@ -474,7 +474,7 @@ class Interpreter:
     def IsTruthy(self, obj):
         print("obj:",obj, file=sys.stderr)
         if obj == False: 
-            return "false"
+            return False
         return True
   
     def Evaluate(self, expr):
