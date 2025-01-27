@@ -413,9 +413,6 @@ class Interpreter:
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
-        # print(right,file=sys.stderr)
-        # print(type(right),file=sys.stderr)
-
         match expr.operator.token_type:
             case "MINUS":
                 self.CheckNumberOperands(expr.operator, left, right)
@@ -427,12 +424,10 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) * float(right)
             case "PLUS":
-                if isinstance(left, float) and isinstance(right, float):
+                if isinstance(left, (float, int)) and isinstance(right, (float, int)):
                     return float(left) + float(right)
-                
-                if isinstance(left, str) and isinstance(right, str):
+                elif isinstance(left, str) and isinstance(right, str):
                     return str(left) + str(right)
-                
                 raise RuntimeError(expr.operator, "Operands must be two numbers or two strings.")
             case "GREATER":
                 self.CheckNumberOperands(expr.operator, left, right)
@@ -447,11 +442,12 @@ class Interpreter:
                 self.CheckNumberOperands(expr.operator, left, right)
                 return float(left) <= float(right)
             case "BANG_EQUAL":
-                return False if self.IsEqual(left, right) == True else True
+                return not self.IsEqual(left, right)
             case "EQUAL":
                 return self.IsEqual(left, right)
 
         return "nil"
+
     
 
     def CheckNumberOperands(self, operator, left, right):
