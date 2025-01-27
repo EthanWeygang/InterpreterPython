@@ -367,16 +367,16 @@ class Interpreter:
             self.RuntimeError(error)
     
     def Stringify(self, obj):
-        if obj is None:
-            return "nil"
+        if obj == None: return "nil"
 
         if isinstance(obj, float):
-            if obj.is_integer():
-                return str(int(obj))
-            return str(obj)
-
+            text = str(obj)
+            if text[-2:] == ".0": #this might be wrong
+                text = int(obj) #might be wrong
+            
+            return text
+        
         return str(obj)
-
     def HasErrors(self):
         return len(self.errors) > 0
 
