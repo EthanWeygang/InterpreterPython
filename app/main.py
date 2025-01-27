@@ -478,6 +478,7 @@ class Interpreter:
         return "true"
   
     def Evaluate(self, expr):
+        print(expr, file=sys.stderr)
         if isinstance(expr, Expr.Literal):
             return self.VisitLiteralExpr(expr)
         elif isinstance(expr, Expr.Grouping):
