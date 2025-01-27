@@ -384,8 +384,8 @@ class Interpreter:
         print(error.message + f"\n[line {error.token.line}]", file=sys.stderr) #may be wrong
 
     def VisitLiteralExpr(self, expr):
-        print("ITS ", expr, type(expr), file=sys.stderr)
-        print(expr.value == "true")
+        print("ITS ", expr, type(expr),expr.value == "true", file=sys.stderr)
+        print()
         if expr.value is None: return "nil"
         if expr.value == "true": return "true"
         if expr.value == "false": return "false"
