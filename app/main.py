@@ -413,7 +413,7 @@ class Interpreter:
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
-        # print(right,file=sys.stderr)
+        print(right,file=sys.stderr)
         # print(type(right),file=sys.stderr)
 
         match expr.operator.token_type:
@@ -484,7 +484,6 @@ class Interpreter:
         elif isinstance(expr, Expr.Unary):
             return self.VisitUnaryExpr(expr)
         elif isinstance(expr, Expr.Binary):
-            print("BINARY ^", file=sys.stderr)
             return self.VisitBinaryExpr(expr)
 
 
