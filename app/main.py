@@ -1,5 +1,6 @@
 import sys
 
+
 class Token:
 
     def __init__(self, token_type, lexeme, literal=None):
@@ -38,8 +39,6 @@ class Scanner:
                 "var":   "VAR",
                 "while": "WHILE"
         }
-    
-    
 
     def ScanTokens(self):
         while not self.atEnd():
@@ -84,7 +83,7 @@ class Scanner:
                     self.LogError(f"[line {self.line}] Error: Unexpected character: {c}")
                     
             
-        return #maybe return something
+        return
         
     def Identifier(self):
         while self.IsAlphaNumeric(self.Peek()):
@@ -141,7 +140,6 @@ class Scanner:
         self.current += 1
         return char
 
-
     def Peek(self):
         if self.atEnd(): return None
         return self.source[self.current]
@@ -149,11 +147,9 @@ class Scanner:
     def PeekNext(self):
         if self.current + 1 >= len(self.source): return None
         return self.source[self.current + 1]
-
     
     def AddToken(self, token_type, literal):
         self.tokens.append(Token(token_type, self.source[self.start:self.current], literal))
-
 
     def PrintTokens(self):
         for t in self.tokens:
@@ -196,6 +192,7 @@ class Expr:
         def __str__(self):
             return f"({self.operator.lexeme} {self.right})".lower()
 
+
     class Binary:
         def __init__(self, left, operator, right):
             self.left = left
@@ -205,6 +202,7 @@ class Expr:
         def __str__(self):
             return f"({self.operator.lexeme} {self.left} {self.right})".lower()
     
+
     class Grouping:
         def __init__(self, expression):
             self.expression = expression
@@ -302,7 +300,6 @@ class Parser:
         self.current += 1
         return char
 
-
     def Match(self, expected):
         if self.atEnd():
             return False
@@ -317,8 +314,7 @@ class Parser:
     
     def Previous(self):
         return self.tokens[self.current - 1]
-    
-    
+       
     def Peek(self):
         if self.atEnd(): return None
         return self.tokens[self.current]
@@ -346,11 +342,13 @@ class Parser:
     def PrintExpr(self):
         print(self.expr)
 
+
 class RuntimeError(Exception):
 
     def __init__(self, token, message):
         self.token = token
         self.message = message
+
 
 class Interpreter:
 
@@ -382,24 +380,25 @@ class Interpreter:
                 return "false"
 
         return str(obj)
+    
     def HasErrors(self):
         return len(self.errors) > 0
 
     def RuntimeError(self, error):
         self.errors.append(error)
-        print(error.message + f"\n[line ]", file=sys.stderr) #may be wrong {error.token.line}
+        print(error.message, file=sys.stderr)
 
-    def VisitLiteralExpr(self, expr):
+    def LiteralExpr(self, expr):
         if expr is None: return "nil"
         if isinstance(expr, bool):
             if expr.value == True: return True
             if expr.value == False: return False
         return expr.value
 
-    def VisitGroupingExpr(self, expr):
+    def GroupingExpr(self, expr):
         return self.Evaluate(expr.expression)
     
-    def VisitUnaryExpr(self, expr):
+    def UnaryExpr(self, expr):
         right = self.Evaluate(expr.right)
 
         match expr.operator.token_type:
@@ -417,7 +416,7 @@ class Interpreter:
             return False
         return True
 
-    def VisitBinaryExpr(self, expr):
+    def BinaryExpr(self, expr):
         left = self.Evaluate(expr.left)
         right = self.Evaluate(expr.right)
 
@@ -458,7 +457,6 @@ class Interpreter:
 
         return "nil"
     
-
     def CheckNumberOperands(self, operator, left, right):
         if isinstance(left, float) and isinstance(right, float):
             return
@@ -477,15 +475,14 @@ class Interpreter:
         return True if a == b else False
   
     def Evaluate(self, expr):
-        print(expr, file=sys.stderr)
         if isinstance(expr, Expr.Literal):
-            return self.VisitLiteralExpr(expr)
+            return self.LiteralExpr(expr)
         elif isinstance(expr, Expr.Grouping):
             return self.Evaluate(expr.expression)
         elif isinstance(expr, Expr.Unary):
-            return self.VisitUnaryExpr(expr)
+            return self.UnaryExpr(expr)
         elif isinstance(expr, Expr.Binary):
-            return self.VisitBinaryExpr(expr)
+            return self.BinaryExpr(expr)
 
 
 def main():
@@ -496,16 +493,10 @@ def main():
     command = sys.argv[1]
     filename = sys.argv[2]
 
-
-
     if command == "tokenize":
         
         with open(filename) as file:
             file_contents = file.read()
-
-            if not file_contents:
-                print("EOF  null") # Placeholder, remove this line when implementing the scanner
-                return 0
             
             errorcode = 0
 
@@ -522,10 +513,6 @@ def main():
     elif command == "parse":
         with open(filename) as file:
             file_contents = file.read()
-
-            if not file_contents:
-                print("EOF  null") # Placeholder, remove this line when implementing the scanner
-                return 0
 
             errorcode = 0
 
@@ -548,10 +535,6 @@ def main():
     elif command == "evaluate":
         with open(filename) as file:
             file_contents = file.read()
-
-            if not file_contents:
-                print("EOF  null") # Placeholder, remove this line when implementing the scanner
-                return 0
 
             errorcode = 0
 
@@ -579,11 +562,9 @@ def main():
     else:
         print(f"Unknown command: {command}", file=sys.stderr)
         exit(1)
-
-
+        
 
     print("Logs from your program will appear here!", file=sys.stderr)
-
 
 
 if __name__ == "__main__":
