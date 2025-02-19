@@ -1,1 +1,9 @@
-50 + 50
+// Some examples of what has been implemented:
+
+//(false == true) != false  This equals False!
+
+//"Hello" + " world" + "!"  Will print "Hello world!"
+
+//123 * (66 + 88) == 18942  This equals true!
+
+"Enter something into input.txt to begin!"
