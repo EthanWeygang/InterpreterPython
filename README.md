@@ -12,3 +12,12 @@ scripting language.
 ```
 python3 -m app.main evaluate input.txt
 ```
+
+Other commands include `parse` and `tokenize` which respectively return the parsed and tokenized versions of input.txt.
+
+```
+python3 -m app.main parse input.txt
+```
+```
+python3 -m app.main tokenize input.txt
+```
