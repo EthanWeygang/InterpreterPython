@@ -7,7 +7,7 @@ scripting language.
 
 1. Ensure you have `python (3.12)` installed locally
 2. Input your script into `input.txt`
-3. Run `python3 -m app.main evaluate input.txt` to run the program implemented in `app/main.py`.
+3. Run `python3 -m app.main evaluate input.txt` to run the program implemented in `app/main.py`
 
 ```
 python3 -m app.main evaluate input.txt
